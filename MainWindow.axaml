@@ -1,0 +1,39 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="WeatherApp.MainWindow"
+        Title="WeatherApp">
+   <Grid>
+       <Grid.ColumnDefinitions>
+           <ColumnDefinition Width="3*"/>
+           <ColumnDefinition Width="5*"/>
+       </Grid.ColumnDefinitions>
+       <Grid.RowDefinitions>
+           <RowDefinition Height="3*"/>
+           <RowDefinition Height="3*"/>x
+           <RowDefinition Height="5*"/>
+       </Grid.RowDefinitions>
+       <Border Background="#2f5cb6"></Border>
+       <Border Grid.Column="1" Background="#1f3d7a"></Border>
+       <Border Grid.Row="1" Grid.ColumnSpan="2" Background="#152951"></Border>
+       <StackPanel>
+           <TextBox Name="inputTextBox" Width="300" Margin="10"/>
+           <Button Content="Submit" Click="SubmitButton_Click" Width="80" Height="30" HorizontalAlignment="Right" Margin="10"/>
+       </StackPanel>
+       <StackPanel Grid.Column="1" Margin="40,0,0,0" VerticalAlignment="Center" >
+           <TextBlock Name="T1" Foreground="White" FontSize="25" />
+           <TextBlock Name="T2" Foreground="White" FontSize="25" />
+           <TextBlock Name="T3" Foreground="White" FontSize="25" />
+       </StackPanel>
+       <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Margin="40,0,0,0" Orientation="Horizontal"
+                   HorizontalAlignment="Center" VerticalAlignment="Center">
+           <TextBlock Name="T4" Foreground="White" FontSize="25"  Margin="0,0,20,0"/>
+           <TextBlock Name="T5" Foreground="White" FontSize="25"  Margin="0,0,20,0"/>
+           <TextBlock Name="T6" Foreground="White" FontSize="25"  Margin="0,0,20,0"/>
+       </StackPanel>
+       <!-- <Image Margin ="20" Source="Assets/image-from-rawpixel-id-6117915-original.png" /> -->
+   </Grid>
+
+</Window>
