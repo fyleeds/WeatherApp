@@ -86,6 +86,9 @@ public class weatherData
     public MainData main { get; set; }
 
     public string name { get; set; }
+    
+    public Coord coord { get; set; }
+
 
 }
 
@@ -103,6 +106,13 @@ public class MainData
     // Les propriétés de la classe
     public double Temp { get; set; }
     public int Humidity { get; set; }
+}
+
+public class Coord
+{
+    // Les propriétés de la classe
+    public double lon { get; set; }
+    public double lat { get; set; }
 }
 
 
@@ -159,7 +169,7 @@ public partial class MainWindow : Window
                     TempVille.Text = $"Température : {weatherData.main.Temp}°C";
                     Humidite.Text = $"Humidité : {weatherData.main.Humidity}%";
                     Description.Text = $"Description météo : {weatherData.weather[0].Description}";
-                    //LienIcon= $"Lien icon : http://openweathermap.org/img/w/{weatherData.weather[0].Icon}.png";
+                    LatLong.Text = $"lat :{weatherData.coord.lat}, lon :{weatherData.coord.lon}";
                     imageUrl = $"http://openweathermap.org/img/w/{weatherData.weather[0].Icon}.png";
                     ChargerImageDepuisUrl(imageUrl,"MeteoImage");
                 }
@@ -224,49 +234,41 @@ public partial class MainWindow : Window
                                         Humidite1.Text = $"Humidité : {forecast.main.Humidity}%";
                                         TempVille1.Text = $"{forecast.main.Temp}°C";
                                         Description1.Text = $"{forecast.weather[0].description}";
-                                        Date1.Text = $"{forecast.dt}";
+                                        Date1.Text = $"{ConvertirDate(forecast.dt)}";
                                         imageUrl = $"http://openweathermap.org/img/w/{forecast.weather[0].icon}.png";
                                         ChargerImageDepuisUrl(imageUrl,"MeteoImage1");
 
-                                        Console.WriteLine(
-                                            $"Date and Time: {forecast.dt}, Temperature: {forecast.main.Temp}");
-                                        Console.WriteLine($"index: {i}");
+                                        
                                         break;
                                     case 2:
                                         Humidite2.Text = $"Humidité : {forecast.main.Humidity}%";
                                         TempVille2.Text = $"{forecast.main.Temp}°C";
                                         Description2.Text = $"{forecast.weather[0].description}";
-                                        Date2.Text = $"{forecast.dt}";
+                                        Date2.Text = $"{ConvertirDate(forecast.dt)}";
                                         imageUrl = $"http://openweathermap.org/img/w/{forecast.weather[0].icon}.png";
                                         ChargerImageDepuisUrl(imageUrl,"MeteoImage2");
 
-                                        Console.WriteLine(
-                                            $"Date and Time: {forecast.dt}, Temperature: {forecast.main.Temp}");
-                                        Console.WriteLine($"index: {i}");
+                                        
                                         break;
                                     case 3:
                                         Humidite3.Text = $"Humidité : {forecast.main.Humidity}%";
                                         TempVille3.Text = $"{forecast.main.Temp}°C";
                                         Description3.Text = $"{forecast.weather[0].description}";
-                                        Date3.Text = $"{forecast.dt}";
+                                        Date3.Text = $"{ConvertirDate(forecast.dt)}";
                                         imageUrl = $"http://openweathermap.org/img/w/{forecast.weather[0].icon}.png";
                                         ChargerImageDepuisUrl(imageUrl,"MeteoImage3");
 
-                                        Console.WriteLine(
-                                            $"Date and Time: {forecast.dt}, Temperature: {forecast.main.Temp}");
-                                        Console.WriteLine($"index: {i}");
+                                        
                                         break;
                                     case 4:
                                         Humidite4.Text = $"Humidité : {forecast.main.Humidity}%";
                                         TempVille4.Text = $"{forecast.main.Temp}°C";
                                         Description4.Text = $"{forecast.weather[0].description}";
-                                        Date4.Text = $"{forecast.dt}";
+                                        Date4.Text = $"{ConvertirDate(forecast.dt)}";
                                         imageUrl = $"http://openweathermap.org/img/w/{forecast.weather[0].icon}.png";
                                         ChargerImageDepuisUrl(imageUrl,"MeteoImage4");
 
-                                        Console.WriteLine(
-                                            $"Date and Time: {forecast.dt}, Temperature: {forecast.main.Temp}");
-                                        Console.WriteLine($"index: {i}");
+                                        
                                         break;
                                     case 5:
                                         Humidite5.Text = $"Humidité : {forecast.main.Humidity}%";
@@ -276,14 +278,9 @@ public partial class MainWindow : Window
                                         imageUrl = $"http://openweathermap.org/img/w/{forecast.weather[0].icon}.png";
                                         ChargerImageDepuisUrl(imageUrl,"MeteoImage5");
 
-                                        Console.WriteLine(
-                                            $"Date and Time: {forecast.dt}, Temperature: {forecast.main.Temp}");
-                                        Console.WriteLine($"index: {i}");
+                                        
                                         break;
                                 }
-
-
-                                //LienIcon= $"Lien icon : http://openweathermap.org/img/w/{weatherData.weather[0].Icon}.png";
                                 
                             }
                             
