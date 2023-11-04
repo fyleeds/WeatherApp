@@ -20,6 +20,85 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+
+public class WeatherForecast
+{
+
+    public List<Forecast> list { get; set; }
+    [JsonProperty("city")]
+    public City city { get; set; }
+}
+
+public class Forecast
+{
+    
+    [JsonProperty("main")]
+    public Main main { get; set; }
+    [JsonProperty("weather")]
+    public List<Weather2> weather { get; set; }
+    [JsonProperty("dt_txt")]
+    public string dt { get; set; }
+
+    
+}
+
+public class Main
+{
+    [JsonProperty("temp")]
+    public double Temp { get; set; }
+
+    [JsonProperty("feels_like")]
+    public double FeelsLike { get; set; }
+
+    [JsonProperty("temp_min")]
+    public double TempMin { get; set; }
+
+    [JsonProperty("temp_max")]
+    public double TempMax { get; set; }
+
+    [JsonProperty("pressure")]
+    public int Pressure { get; set; }
+
+    [JsonProperty("sea_level")]
+    public int SeaLevel { get; set; }
+
+    [JsonProperty("grnd_level")]
+    public int GroundLevel { get; set; }
+
+    [JsonProperty("humidity")]
+    public int Humidity { get; set; }
+
+    [JsonProperty("temp_kf")]
+    public double TempKf { get; set; }
+
+}
+
+public class Weather2
+{
+    [JsonProperty("description")]
+    public string description { get; set; }
+    [JsonProperty("icon")]
+    public string icon { get; set; }
+}
+
+public class City
+{
+
+    [JsonProperty("name")] public string Name { get; set; }
+
+    [JsonProperty("coord")] public Coordinates Coord { get; set; }
+}
+
+public class Coordinates
+{
+    [JsonProperty("lat")]
+    public double Lat { get; set; }
+
+    [JsonProperty("lon")]
+    public double Lon { get; set; }
+}
+//end
+
 public class weatherData
 {
     public List<Weather> weather { get; set; }
@@ -103,7 +182,6 @@ public partial class MainWindow : Window
             {
                 Location newLocation = new Location {};
                 (newLocation.NameCity,newLocation.Latitude,newLocation.Longitude) = await GetCityAsync(input);
-                Console.WriteLine($"Second Check : Name : {newLocation.NameCity}Latitude: {newLocation.Latitude}, Longitude: {newLocation.Longitude}");
 
                 // Spécifiez l'URL de l'API que vous souhaitez interroger
                 string apiUrl =
@@ -122,11 +200,82 @@ public partial class MainWindow : Window
                     NameVille.Text = $"Ville : {weatherData.name}";
                     TempVille.Text = $"Température : {weatherData.main.Temp}°C";
                     Humidite.Text = $"Humidité : {weatherData.main.Humidity}%";
-                    Humidite2.Text = $"Humidité : {weatherData.main.Humidity}%";
                     Description.Text = $"Description météo : {weatherData.weather[0].Description}";
-                    // LienIcon.Text = $"Lien icon : http://openweathermap.org/img/w/{weatherData.weather[0].Icon}.png";
+                    //LienIcon= $"Lien icon : http://openweathermap.org/img/w/{weatherData.weather[0].Icon}.png";
                     imageUrl = $"http://openweathermap.org/img/w/{weatherData.weather[0].Icon}.png";
                     LoadImageFromUrl(imageUrl);
+                }
+                else
+                {
+                    Console.WriteLine($"La requête a échoué avec le code de statut : {response.StatusCode}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Une erreur s'est produite : {ex.Message}");
+            }
+        }
+    }
+    public async void testForecast(string input)
+    {
+        using (HttpClient client = new HttpClient())
+        {
+            try
+            {
+                Location newLocation = new Location {};
+                (newLocation.NameCity,newLocation.Latitude,newLocation.Longitude) = await GetCityAsync(input);
+                Console.WriteLine($"Third Check : Name : {newLocation.NameCity}Latitude: {newLocation.Latitude}, Longitude: {newLocation.Longitude}");
+
+                // Spécifiez l'URL de l'API que vous souhaitez interroger
+                string apiUrl =
+                    $"https://api.openweathermap.org/data/2.5/forecast?lat={newLocation.Latitude}&lon={newLocation.Longitude}&appid=19e8ae246f03ffc54bbdae83a37e7315&lang=fr&units=metric&exclud=name";
+
+                // Effectuez une requête GET
+                HttpResponseMessage response = await client.GetAsync(apiUrl);
+
+                // Vérifiez si la requête a réussi (code de statut 200 OK)
+                if (response.IsSuccessStatusCode)
+                {
+                    // Lisez le contenu de la réponse
+                    string content = await response.Content.ReadAsStringAsync();
+                    var forecastData = JsonConvert.DeserializeObject<WeatherForecast>(content);
+                    
+                    if (forecastData?.list != null)
+                    {
+                        int i = 0;
+                        Console.WriteLine($"Date and Time: {forecastData.list}");
+                        NameVille2.Text = $" {forecastData.city.Name}";
+                        Coords2.Text = $"lat :{forecastData.city.Coord.Lat} , lon : {forecastData.city.Coord.Lon}";
+                        foreach (var forecast in forecastData.list)
+                        {
+                            
+                            //Console.WriteLine($"Date and Time: {forecast.dt}");
+                            
+                            if (CompareDateNoon(forecast.dt))
+                            {
+                                i++;
+                                //switch(i)
+                                //{
+                                    
+                               if (i == 2) {
+                                   Humidite2.Text = $"Humidité : {forecast.main.Humidity}%";
+                                   TempVille2.Text = $"{forecast.main.Temp}°C";
+                                   Description2.Text = $"{forecast.weather[0].description}";
+                                   Date2.Text = $"{forecast.dt}";
+                                   
+                                   Console.WriteLine($"Date and Time: {forecast.dt}, Temperature: {forecast.main.Temp}");
+                                   Console.WriteLine($"index: {i}");
+                               }
+                                
+                                
+                                //LienIcon= $"Lien icon : http://openweathermap.org/img/w/{weatherData.weather[0].Icon}.png";
+                                //imageUrl = $"http://openweathermap.org/img/w/{weatherData.weather[0].Icon}.png";
+                                //LoadImageFromUrl(imageUrl);
+                                //Console.WriteLine($"Date and Time: {forecast.dt}, Temperature: {forecast.main.Temp}");
+                            }
+                            
+                        }
+                    }
                 }
                 else
                 {
@@ -143,9 +292,15 @@ public partial class MainWindow : Window
     {
         string input = SearchBox.Text;
         test(input);
-        
-        // You can now use cityName as the input for your search logic.
+        testForecast(input);
+
     }
+
+    public bool CompareDateNoon(string dateTime)
+    {
+        return dateTime.Substring(11) == "12:00:00";
+    }
+ 
     public async void LoadImageFromUrl(string imageUrl)
     {
         try
@@ -169,7 +324,6 @@ public partial class MainWindow : Window
 
     public async Task<(string NameLocation, double Lat, double Lon)> GetCityAsync(string input)
     {
-        Console.WriteLine("here");
         string apiUrl =
             $"http://api.openweathermap.org/geo/1.0/direct?q={input}&limit=1&appid=19e8ae246f03ffc54bbdae83a37e7315";
 
@@ -186,18 +340,13 @@ public partial class MainWindow : Window
 
                     //list the name of all cities
                     var Cities = JsonConvert.DeserializeObject<List<Location>>(jsonContent);
-
+                    
                     // Check if any cities were found
                     if (Cities == null)
                     {
-                        Console.WriteLine("null");
                         return (String.Empty, 0, 0);
-                    }
-
-                    // the first city in the list
+                    } 
                     var City = Cities[0];
-                    Console.WriteLine($"First city found: Name: {City.NameCity}, Latitude: {City.Latitude}, Longitude: {City.Longitude}");
-
                     return (City.NameCity, City.Latitude, City.Longitude);
                     
                 }
@@ -214,5 +363,7 @@ public partial class MainWindow : Window
 
         return (String.Empty, 0, 0);
     }
+    
+
 }
 

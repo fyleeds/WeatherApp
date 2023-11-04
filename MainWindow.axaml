@@ -7,7 +7,7 @@
         Title="WeatherApp">
 
 
-    <!-- <TabControl Margin="10" Background="WhiteSmoke" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"> -->
+        <!-- <TabControl Margin="10" Background="WhiteSmoke" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"> -->
 
     <TabControl>
          <!-- Onglet 1 : Recherche de ville -->
@@ -16,6 +16,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
                 <!-- Section de recherche de ville -->
@@ -23,6 +24,9 @@
                     <TextBox x:Name="SearchBox" Width="200" Text="Entrez le nom de la ville..."/>
                     <Button Content="Rechercher" Click="SearchWeather" Width="100" Margin="10,0,0,0"/>
                 </StackPanel>
+
+
+                
 
                 <!-- Résultats de la recherche -->
                 <StackPanel Grid.Row="1">
@@ -40,7 +44,7 @@
         <TabItem Header="Prévisions" Background="LightGray" HorizontalContentAlignment="Center">
             <ListBox  HorizontalAlignment="Center" Width="1200">
                 <ListBoxItem>
-                    <Expander Header="Fri, Nov 03  Bordeaux" Width="350" HorizontalAlignment="Center">
+                    <Expander Header="Jour1  Bordeaux" Width="350" HorizontalAlignment="Center">
                         <!-- Contenu principal de l'Expander -->
                         <StackPanel Spacing="5">
                             <!-- Informations principales -->
@@ -51,7 +55,7 @@
                             </StackPanel>
                             <!-- Contenu détaillé (visible lors de l'expansion) -->
                             <StackPanel Spacing="5">
-                                <TextBlock x:Name="Humidite2" FontSize="14"/>
+                                <TextBlock x:Name="Humidite1" FontSize="14"/>
                                 <TextBlock Text="Détail: Date et heure de la prévision" FontSize="14"/>
                                 <TextBlock Text="Détail: Latitude et longitude" FontSize="14"/>
                                 <!-- ... Autres détails ... -->
@@ -62,7 +66,29 @@
                 <!-- Répétez ce modèle pour les autres jours -->
                 <!-- ... -->
                 <ListBoxItem>
-                    <Expander Header="Fri, Nov 03  Bordeaux" Width="500">
+                    
+                    <Expander Header="Jour2"  Width="500">
+                        <!-- Contenu principal de l'Expander -->
+                        <StackPanel Spacing="10">
+                            <!-- Informations principales -->
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                <!-- <Image Source="path_to_broken_clouds_icon" Width="20" Height="20"/> -->
+                                <TextBlock x:Name="TempVille2" Width="100" FontSize="16"/>
+                                <TextBlock x:Name="Description2" Width="150" FontSize="16" HorizontalAlignment="Stretch"/>
+                            </StackPanel>
+                            <!-- Contenu détaillé (visible lors de l'expansion) -->
+                            <StackPanel Spacing="5">
+                                <TextBlock x:Name="Humidite2" FontSize="14"/>
+                                <TextBlock  x:Name="Date2" FontSize="14"/>
+                                <TextBlock x:Name="NameVille2" FontSize="14"/>
+                                <TextBlock x:Name="Coords2" FontSize="14"/>
+                                <!-- ... Autres détails ... -->
+                            </StackPanel>
+                        </StackPanel>
+                    </Expander>
+                </ListBoxItem>
+                <ListBoxItem>
+                    <Expander Header="Jour3  Bordeaux" Width="500">
                         <!-- Contenu principal de l'Expander -->
                         <StackPanel Spacing="10">
                             <!-- Informations principales -->
@@ -82,7 +108,7 @@
                     </Expander>
                 </ListBoxItem>
                 <ListBoxItem>
-                    <Expander Header="Fri, Nov 03  Bordeaux" Width="500">
+                    <Expander Header="Jour4 Bordeaux" Width="500">
                         <!-- Contenu principal de l'Expander -->
                         <StackPanel Spacing="10">
                             <!-- Informations principales -->
@@ -102,27 +128,7 @@
                     </Expander>
                 </ListBoxItem>
                 <ListBoxItem>
-                    <Expander Header="Fri, Nov 03  Bordeaux" Width="500">
-                        <!-- Contenu principal de l'Expander -->
-                        <StackPanel Spacing="10">
-                            <!-- Informations principales -->
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                                <!-- <Image Source="path_to_broken_clouds_icon" Width="20" Height="20"/> -->
-                                <TextBlock Text="12 / 9°C" Width="100" FontSize="16"/>
-                                <TextBlock Text="broken clouds" Width="150" FontSize="16" HorizontalAlignment="Stretch"/>
-                            </StackPanel>
-                            <!-- Contenu détaillé (visible lors de l'expansion) -->
-                            <StackPanel Spacing="5">
-                                <TextBlock Text="Détail: Humidité 60%" FontSize="14"/>
-                                <TextBlock Text="Détail: Date et heure de la prévision" FontSize="14"/>
-                                <TextBlock Text="Détail: Latitude et longitude" FontSize="14"/>
-                                <!-- ... Autres détails ... -->
-                            </StackPanel>
-                        </StackPanel>
-                    </Expander>
-                </ListBoxItem>
-                <ListBoxItem>
-                    <Expander Header="Fri, Nov 03  Bordeaux" Width="500">
+                    <Expander Header="Jour5 Bordeaux" Width="500">
                         <!-- Contenu principal de l'Expander -->
                         <StackPanel Spacing="10">
                             <!-- Informations principales -->
@@ -170,5 +176,8 @@
                 </StackPanel>
             </StackPanel>
         </TabItem>
+         
+        
+        
     </TabControl>
 </Window>
