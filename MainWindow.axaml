@@ -161,13 +161,59 @@
                 <!-- Sélection de la langue -->
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Langue:" Width="150" VerticalAlignment="Center"/>
-                    <ComboBox x:Name="LanguageSelector" Width="200">
+                    <ComboBox x:Name="LanguageSelector" SelectionChanged="ChangeLangue" Width="200">
                         <!-- Vous pouvez ajouter ou supprimer des langues selon vos besoins -->
-                        <ComboBoxItem Content="Français"/>
-                        <ComboBoxItem Content="Anglais"/>
-                        <ComboBoxItem Content="Espagnol"/>
+                        <ComboBoxItem Content="Afrikaans" Tag="af"/>
+                        <ComboBoxItem Content="Albanais" Tag="sq"/>
+                        <ComboBoxItem Content="Arabe" Tag="ar"/>
+                        <ComboBoxItem Content="Azéri" Tag="az"/>
+                        <ComboBoxItem Content="Bulgare" Tag="bg"/>
+                        <ComboBoxItem Content="Catalan" Tag="ca"/>
+                        <ComboBoxItem Content="Tchèque" Tag="cs"/>
+                        <ComboBoxItem Content="Danois" Tag="da"/>
+                        <ComboBoxItem Content="Allemand" Tag="de"/>
+                        <ComboBoxItem Content="Grec" Tag="el"/>
+                        <ComboBoxItem Content="Anglais" Tag="en"/>
+                        <ComboBoxItem Content="Basque" Tag="eu"/>
+                        <ComboBoxItem Content="Persan (Farsi)" Tag="fa"/>
+                        <ComboBoxItem Content="Finnois" Tag="fi"/>
+                        <ComboBoxItem Content="Français" Tag="fr"/>
+                        <ComboBoxItem Content="Galicien" Tag="gl"/>
+                        <ComboBoxItem Content="Hébreu" Tag="he"/>
+                        <ComboBoxItem Content="Hindi" Tag="hi"/>
+                        <ComboBoxItem Content="Croate" Tag="hr"/>
+                        <ComboBoxItem Content="Hongrois" Tag="hu"/>
+                        <ComboBoxItem Content="Indonésien" Tag="id"/>
+                        <ComboBoxItem Content="Italien" Tag="it"/>
+                        <ComboBoxItem Content="Japonais" Tag="ja"/>
+                        <ComboBoxItem Content="Coréen" Tag="ko"/>
+                        <ComboBoxItem Content="Letton" Tag="lv"/>
+                        <ComboBoxItem Content="Lituanien" Tag="lt"/>
+                        <ComboBoxItem Content="Macédonien" Tag="mk"/>
+                        <ComboBoxItem Content="Norvégien" Tag="no"/>
+                        <ComboBoxItem Content="Néerlandais" Tag="nl"/>
+                        <ComboBoxItem Content="Polonais" Tag="pl"/>
+                        <ComboBoxItem Content="Portugais" Tag="pt"/>
+                        <ComboBoxItem Content="Portugais Brésilien" Tag="pt-BR"/>
+                        <ComboBoxItem Content="Roumain" Tag="ro"/>
+                        <ComboBoxItem Content="Russe" Tag="ru"/>
+                        <ComboBoxItem Content="Suédois" Tag="sv"/>
+                        <ComboBoxItem Content="Slovaque" Tag="sk"/>
+                        <ComboBoxItem Content="Slovène" Tag="sl"/>
+                        <ComboBoxItem Content="Espagnol" Tag="es"/>
+                        <ComboBoxItem Content="Serbe" Tag="sr"/>
+                        <ComboBoxItem Content="Thaï" Tag="th"/>
+                        <ComboBoxItem Content="Turc" Tag="tr"/>
+                        <ComboBoxItem Content="Ukrainien" Tag="uk"/>
+                        <ComboBoxItem Content="Vietnamien" Tag="vi"/>
+                        <ComboBoxItem Content="Chinois Simplifié" Tag="zh-CN"/>
+                        <ComboBoxItem Content="Chinois Traditionnel" Tag="zh-TW"/>
+                        <ComboBoxItem Content="Zoulou" Tag="zu"/>
                         <!-- ... -->
                     </ComboBox>
+
+
+
                 </StackPanel>
             </StackPanel>
         </TabItem>       

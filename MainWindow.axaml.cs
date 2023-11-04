@@ -12,6 +12,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 using Avalonia.Interactivity;
 using Avalonia.Media.Imaging;
+using HarfBuzzSharp;
 using Newtonsoft.Json;
 namespace WeatherApp;
 using Avalonia;
@@ -132,17 +133,15 @@ public partial class MainWindow : Window
 {
     // Les variables de la classe
     public String imageUrl;
-    public TextBlock Lienicon;
 
     public MainWindow()
     {
         InitializeComponent();
         // Initialisation des composants de l'interface
         
-
     }
 
-    public async void ChargerMeteoActuelle(string input)
+    public async void ChargerMeteoActuelle(string input, string lang="fr")
     {
         // Code asynchrone pour tester la récupération des données météorologiques
         using (HttpClient client = new HttpClient())
@@ -154,7 +153,7 @@ public partial class MainWindow : Window
 
                 // Spécifiez l'URL de l'API que vous souhaitez interroger
                 string apiUrl =
-                    $"https://api.openweathermap.org/data/2.5/weather?lat={newLocation.Latitude}&lon={newLocation.Longitude}&appid=19e8ae246f03ffc54bbdae83a37e7315&lang=fr&units=metric&exclud=name";
+                    $"https://api.openweathermap.org/data/2.5/weather?lat={newLocation.Latitude}&lon={newLocation.Longitude}&appid=19e8ae246f03ffc54bbdae83a37e7315&lang={lang}&units=metric&exclud=name";
 
                 // Effectuez une requête GET
                 HttpResponseMessage réponse = await client.GetAsync(apiUrl);
@@ -166,9 +165,9 @@ public partial class MainWindow : Window
                     string contenu = await réponse.Content.ReadAsStringAsync();
                     var weatherData = JsonConvert.DeserializeObject<weatherData>(contenu);
                     NomVille.Text = $"Ville : {weatherData.name}";
-                    TempVille.Text = $"Température : {weatherData.main.Temp}°C";
+                    TempVille.Text = $"{weatherData.main.Temp}°C";
                     Humidite.Text = $"Humidité : {weatherData.main.Humidity}%";
-                    Description.Text = $"Description météo : {weatherData.weather[0].Description}";
+                    Description.Text = $"{weatherData.weather[0].Description}";
                     LatLong.Text = $"lat :{weatherData.coord.lat}, lon :{weatherData.coord.lon}";
                     imageUrl = $"http://openweathermap.org/img/w/{weatherData.weather[0].Icon}.png";
                     ChargerImageDepuisUrl(imageUrl,"MeteoImage");
@@ -184,7 +183,7 @@ public partial class MainWindow : Window
             }
         }
     }
-    public async void ChargerMeteoPrevu(string input)
+    public async void ChargerMeteoPrevu(string input,string lang="fr")
     {
         // Code asynchrone pour tester la récupération des prévisions météorologiques
     
@@ -197,7 +196,7 @@ public partial class MainWindow : Window
 
                 // Spécifiez l'URL de l'API que vous souhaitez interroger
                 string apiUrl =
-                    $"https://api.openweathermap.org/data/2.5/forecast?lat={newLocation.Latitude}&lon={newLocation.Longitude}&appid=19e8ae246f03ffc54bbdae83a37e7315&lang=fr&units=metric&exclud=name";
+                    $"https://api.openweathermap.org/data/2.5/forecast?lat={newLocation.Latitude}&lon={newLocation.Longitude}&appid=19e8ae246f03ffc54bbdae83a37e7315&lang={lang}&units=metric&exclud=name";
 
                 // Effectuez une requête GET
                 HttpResponseMessage réponse = await client.GetAsync(apiUrl);
@@ -304,6 +303,21 @@ public partial class MainWindow : Window
         string entrée = SearchBox.Text;
         ChargerMeteoActuelle(entrée);
         ChargerMeteoPrevu(entrée);
+
+    }
+    
+    public void ChangeLangue(object sender, SelectionChangedEventArgs e)
+    {
+        if (sender is ComboBox comboBox)
+        { 
+            ComboBoxItem selectedItem = comboBox.SelectedItem as ComboBoxItem;
+            if (selectedItem?.Tag is string abbreviation)
+            {
+                // Utilisez l'abréviation ici
+                ChargerMeteoActuelle(SearchBox.Text,abbreviation);
+                ChargerMeteoPrevu(SearchBox.Text,abbreviation);
+            }
+        }
 
     }
 
