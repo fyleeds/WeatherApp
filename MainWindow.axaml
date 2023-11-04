@@ -21,7 +21,7 @@
 
                 <!-- Section de recherche de ville -->
                 <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,10">
-                    <TextBox x:Name="SearchBox" Width="200" Text="Entrez le nom de la ville..."/>
+                    <TextBox x:Name="SearchBox" Width="200"/>
                     <Button Content="Rechercher" Click="SearchWeather" Width="100" Margin="10,0,0,0"/>
                 </StackPanel>
 
@@ -33,9 +33,11 @@
                     <TextBlock x:Name="NameVille" FontWeight="Bold" FontSize="20" />
                     <TextBlock x:Name="LatLong" Margin="0,5"/>
                     <TextBlock x:Name="TempVille" Margin="0,5"/>
-                    <TextBlock x:Name="Description" Margin="0,5"/>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock x:Name="Description" Margin="0,5,10,5"/>
+                    <Image x:Name="WeatherImage" Width="30" Height="30"/>
+                </StackPanel>
                     <TextBlock x:Name="Humidite" Margin="0,5"/>
-                    <Image x:Name="WeatherImage" Width="50" Height="50" Margin="0,10"/>
                 </StackPanel>
             </Grid>
         </TabItem>
@@ -44,20 +46,21 @@
         <TabItem Header="Prévisions" Background="LightGray" HorizontalContentAlignment="Center">
             <ListBox  HorizontalAlignment="Center" Width="1200">
                 <ListBoxItem>
-                    <Expander Header="Jour1  Bordeaux" Width="350" HorizontalAlignment="Center">
+                    <Expander Header="Jour1"  Width="500" >
                         <!-- Contenu principal de l'Expander -->
                         <StackPanel Spacing="5">
                             <!-- Informations principales -->
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                                 <!-- <Image Source="path_to_broken_clouds_icon" Width="20" Height="20"/> -->
-                                <TextBlock Text="12 / 9°C" Width="100" FontSize="16"/>
-                                <TextBlock Text="broken clouds" Width="150" FontSize="16" HorizontalAlignment="Stretch"/>
+                                <TextBlock x:Name="TempVille1" Width="100" FontSize="16"/>
+                                <TextBlock x:Name="Description1" Width="150" FontSize="16" HorizontalAlignment="Stretch"/>
                             </StackPanel>
                             <!-- Contenu détaillé (visible lors de l'expansion) -->
                             <StackPanel Spacing="5">
                                 <TextBlock x:Name="Humidite1" FontSize="14"/>
-                                <TextBlock Text="Détail: Date et heure de la prévision" FontSize="14"/>
-                                <TextBlock Text="Détail: Latitude et longitude" FontSize="14"/>
+                                <TextBlock x:Name="Date1" FontSize="14"/>
+                                <TextBlock x:Name="NameVille1" FontSize="14"/>
+                                <TextBlock x:Name="Coords1" FontSize="14"/>
                                 <!-- ... Autres détails ... -->
                             </StackPanel>
                         </StackPanel>
@@ -66,8 +69,7 @@
                 <!-- Répétez ce modèle pour les autres jours -->
                 <!-- ... -->
                 <ListBoxItem>
-                    
-                    <Expander Header="Jour2"  Width="500">
+                    <Expander Header="Jour2" Width="500">
                         <!-- Contenu principal de l'Expander -->
                         <StackPanel Spacing="10">
                             <!-- Informations principales -->
@@ -88,60 +90,65 @@
                     </Expander>
                 </ListBoxItem>
                 <ListBoxItem>
-                    <Expander Header="Jour3  Bordeaux" Width="500">
+                    <Expander Header="Jour3" Width="500">
                         <!-- Contenu principal de l'Expander -->
                         <StackPanel Spacing="10">
                             <!-- Informations principales -->
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                                 <!-- <Image Source="path_to_broken_clouds_icon" Width="20" Height="20"/> -->
-                                <TextBlock Text="12 / 9°C" Width="100" FontSize="16"/>
-                                <TextBlock Text="broken clouds" Width="150" FontSize="16" HorizontalAlignment="Stretch"/>
+                                <TextBlock x:Name="TempVille3" Width="100" FontSize="16"/>
+                                <TextBlock x:Name="Description3" Width="150" FontSize="16" HorizontalAlignment="Stretch"/>
                             </StackPanel>
                             <!-- Contenu détaillé (visible lors de l'expansion) -->
                             <StackPanel Spacing="5">
-                                <TextBlock Text="Détail: Humidité 60%" FontSize="14"/>
-                                <TextBlock Text="Détail: Date et heure de la prévision" FontSize="14"/>
-                                <TextBlock Text="Détail: Latitude et longitude" FontSize="14"/>
+                                <TextBlock x:Name="Humidite3" FontSize="14"/>
+                                <TextBlock x:Name="Date3" FontSize="14"/>
+                                <TextBlock x:Name="NameVille3" FontSize="14"/>
+                                <TextBlock x:Name="Coords3" FontSize="14"/>
+                                
                                 <!-- ... Autres détails ... -->
                             </StackPanel>
                         </StackPanel>
                     </Expander>
                 </ListBoxItem>
                 <ListBoxItem>
-                    <Expander Header="Jour4 Bordeaux" Width="500">
+                    <Expander Header="Jour4" Width="500">
                         <!-- Contenu principal de l'Expander -->
                         <StackPanel Spacing="10">
                             <!-- Informations principales -->
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                                 <!-- <Image Source="path_to_broken_clouds_icon" Width="20" Height="20"/> -->
-                                <TextBlock Text="12 / 9°C" Width="100" FontSize="16"/>
-                                <TextBlock Text="broken clouds" Width="150" FontSize="16" HorizontalAlignment="Stretch"/>
+                                <TextBlock x:Name="TempVille4" Width="100" FontSize="16"/>
+                                <TextBlock x:Name="Description4" Width="150" FontSize="16" HorizontalAlignment="Stretch"/>
                             </StackPanel>
                             <!-- Contenu détaillé (visible lors de l'expansion) -->
                             <StackPanel Spacing="5">
-                                <TextBlock Text="Détail: Humidité 60%" FontSize="14"/>
-                                <TextBlock Text="Détail: Date et heure de la prévision" FontSize="14"/>
-                                <TextBlock Text="Détail: Latitude et longitude" FontSize="14"/>
+                                <TextBlock x:Name="Humidite4" FontSize="14"/>
+                                <TextBlock x:Name="Date4" FontSize="14"/>
+                                <TextBlock x:Name="NameVille4" FontSize="14"/>
+                                <TextBlock x:Name="Coords4" FontSize="14"/>
+                                
                                 <!-- ... Autres détails ... -->
                             </StackPanel>
                         </StackPanel>
                     </Expander>
                 </ListBoxItem>
                 <ListBoxItem>
-                    <Expander Header="Jour5 Bordeaux" Width="500">
+                    <Expander Header="Jour5" Width="500">
                         <!-- Contenu principal de l'Expander -->
                         <StackPanel Spacing="10">
                             <!-- Informations principales -->
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                                 <!-- <Image Source="path_to_broken_clouds_icon" Width="20" Height="20"/> -->
-                                <TextBlock Text="12 / 9°C" Width="100" FontSize="16"/>
-                                <TextBlock Text="broken clouds" Width="150" FontSize="16" HorizontalAlignment="Stretch"/>
+                                <TextBlock x:Name="TempVille5" Width="100" FontSize="16"/>
+                                <TextBlock x:Name="Description5" Width="150" FontSize="16" HorizontalAlignment="Stretch"/>
                             </StackPanel>
                             <!-- Contenu détaillé (visible lors de l'expansion) -->
                             <StackPanel Spacing="5">
-                                <TextBlock Text="Détail: Humidité 60%" FontSize="14"/>
-                                <TextBlock Text="Détail: Date et heure de la prévision" FontSize="14"/>
-                                <TextBlock Text="Détail: Latitude et longitude" FontSize="14"/>
+                                <TextBlock x:Name="Humidite5" FontSize="14"/>
+                                <TextBlock x:Name="Date5" FontSize="14"/>
+                                <TextBlock x:Name="NameVille5" FontSize="14"/>
+                                <TextBlock x:Name="Coords5" FontSize="14"/>
                                 <!-- ... Autres détails ... -->
                             </StackPanel>
                         </StackPanel>
@@ -175,9 +182,6 @@
                     </ComboBox>
                 </StackPanel>
             </StackPanel>
-        </TabItem>
-         
-        
-        
+        </TabItem>       
     </TabControl>
 </Window>

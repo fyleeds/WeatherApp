@@ -46,30 +46,9 @@ public class Main
 {
     [JsonProperty("temp")]
     public double Temp { get; set; }
-
-    [JsonProperty("feels_like")]
-    public double FeelsLike { get; set; }
-
-    [JsonProperty("temp_min")]
-    public double TempMin { get; set; }
-
-    [JsonProperty("temp_max")]
-    public double TempMax { get; set; }
-
-    [JsonProperty("pressure")]
-    public int Pressure { get; set; }
-
-    [JsonProperty("sea_level")]
-    public int SeaLevel { get; set; }
-
-    [JsonProperty("grnd_level")]
-    public int GroundLevel { get; set; }
-
+    
     [JsonProperty("humidity")]
     public int Humidity { get; set; }
-
-    [JsonProperty("temp_kf")]
-    public double TempKf { get; set; }
 
 }
 
@@ -243,9 +222,16 @@ public partial class MainWindow : Window
                     if (forecastData?.list != null)
                     {
                         int i = 0;
-                        Console.WriteLine($"Date and Time: {forecastData.list}");
+                        NameVille1.Text = $" {forecastData.city.Name}";
+                        Coords1.Text = $"lat :{forecastData.city.Coord.Lat} , lon : {forecastData.city.Coord.Lon}";
                         NameVille2.Text = $" {forecastData.city.Name}";
                         Coords2.Text = $"lat :{forecastData.city.Coord.Lat} , lon : {forecastData.city.Coord.Lon}";
+                        NameVille3.Text = $" {forecastData.city.Name}";
+                        Coords3.Text = $"lat :{forecastData.city.Coord.Lat} , lon : {forecastData.city.Coord.Lon}";
+                        NameVille4.Text = $" {forecastData.city.Name}";
+                        Coords4.Text = $"lat :{forecastData.city.Coord.Lat} , lon : {forecastData.city.Coord.Lon}";
+                        NameVille5.Text = $" {forecastData.city.Name}";
+                        Coords5.Text = $"lat :{forecastData.city.Coord.Lat} , lon : {forecastData.city.Coord.Lon}";
                         foreach (var forecast in forecastData.list)
                         {
                             
@@ -254,20 +240,61 @@ public partial class MainWindow : Window
                             if (CompareDateNoon(forecast.dt))
                             {
                                 i++;
-                                //switch(i)
-                                //{
-                                    
-                               if (i == 2) {
-                                   Humidite2.Text = $"Humidité : {forecast.main.Humidity}%";
-                                   TempVille2.Text = $"{forecast.main.Temp}°C";
-                                   Description2.Text = $"{forecast.weather[0].description}";
-                                   Date2.Text = $"{forecast.dt}";
-                                   
-                                   Console.WriteLine($"Date and Time: {forecast.dt}, Temperature: {forecast.main.Temp}");
-                                   Console.WriteLine($"index: {i}");
-                               }
-                                
-                                
+                                switch (i)
+                                {
+                                    case 1:
+                                        Humidite1.Text = $"Humidité : {forecast.main.Humidity}%";
+                                        TempVille1.Text = $"{forecast.main.Temp}°C";
+                                        Description1.Text = $"{forecast.weather[0].description}";
+                                        Date1.Text = $"{forecast.dt}";
+
+                                        Console.WriteLine(
+                                            $"Date and Time: {forecast.dt}, Temperature: {forecast.main.Temp}");
+                                        Console.WriteLine($"index: {i}");
+                                        break;
+                                    case 2:
+                                        Humidite2.Text = $"Humidité : {forecast.main.Humidity}%";
+                                        TempVille2.Text = $"{forecast.main.Temp}°C";
+                                        Description2.Text = $"{forecast.weather[0].description}";
+                                        Date2.Text = $"{forecast.dt}";
+
+                                        Console.WriteLine(
+                                            $"Date and Time: {forecast.dt}, Temperature: {forecast.main.Temp}");
+                                        Console.WriteLine($"index: {i}");
+                                        break;
+                                    case 3:
+                                        Humidite3.Text = $"Humidité : {forecast.main.Humidity}%";
+                                        TempVille3.Text = $"{forecast.main.Temp}°C";
+                                        Description3.Text = $"{forecast.weather[0].description}";
+                                        Date3.Text = $"{forecast.dt}";
+
+                                        Console.WriteLine(
+                                            $"Date and Time: {forecast.dt}, Temperature: {forecast.main.Temp}");
+                                        Console.WriteLine($"index: {i}");
+                                        break;
+                                    case 4:
+                                        Humidite4.Text = $"Humidité : {forecast.main.Humidity}%";
+                                        TempVille4.Text = $"{forecast.main.Temp}°C";
+                                        Description4.Text = $"{forecast.weather[0].description}";
+                                        Date4.Text = $"{forecast.dt}";
+
+                                        Console.WriteLine(
+                                            $"Date and Time: {forecast.dt}, Temperature: {forecast.main.Temp}");
+                                        Console.WriteLine($"index: {i}");
+                                        break;
+                                    case 5:
+                                        Humidite5.Text = $"Humidité : {forecast.main.Humidity}%";
+                                        TempVille5.Text = $"{forecast.main.Temp}°C";
+                                        Description5.Text = $"{forecast.weather[0].description}";
+                                        Date5.Text = $"{forecast.dt}";
+
+                                        Console.WriteLine(
+                                            $"Date and Time: {forecast.dt}, Temperature: {forecast.main.Temp}");
+                                        Console.WriteLine($"index: {i}");
+                                        break;
+                                }
+
+
                                 //LienIcon= $"Lien icon : http://openweathermap.org/img/w/{weatherData.weather[0].Icon}.png";
                                 //imageUrl = $"http://openweathermap.org/img/w/{weatherData.weather[0].Icon}.png";
                                 //LoadImageFromUrl(imageUrl);
@@ -300,6 +327,8 @@ public partial class MainWindow : Window
     {
         return dateTime.Substring(11) == "12:00:00";
     }
+
+
  
     public async void LoadImageFromUrl(string imageUrl)
     {
