@@ -3,7 +3,7 @@ namespace WeatherApp
 
 
 
-    class Person
+    class Data
     {
         public string Name { get; set; }
         public int Age { get; set; }

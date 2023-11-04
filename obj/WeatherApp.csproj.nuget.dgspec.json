@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\RiderProjects\\WeatherApp\\WeatherApp\\WeatherApp.csproj": {}
+    "C:\\Users\\Penot Clement\\Desktop\\Dev\\CSharp\\WeatherApp\\WeatherApp.csproj": {}
   },
   "projects": {
-    "D:\\RiderProjects\\WeatherApp\\WeatherApp\\WeatherApp.csproj": {
+    "C:\\Users\\Penot Clement\\Desktop\\Dev\\CSharp\\WeatherApp\\WeatherApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\RiderProjects\\WeatherApp\\WeatherApp\\WeatherApp.csproj",
+        "projectUniqueName": "C:\\Users\\Penot Clement\\Desktop\\Dev\\CSharp\\WeatherApp\\WeatherApp.csproj",
         "projectName": "WeatherApp",
-        "projectPath": "D:\\RiderProjects\\WeatherApp\\WeatherApp\\WeatherApp.csproj",
-        "packagesPath": "C:\\Users\\clemc\\.nuget\\packages\\",
-        "outputPath": "D:\\RiderProjects\\WeatherApp\\WeatherApp\\obj\\",
+        "projectPath": "C:\\Users\\Penot Clement\\Desktop\\Dev\\CSharp\\WeatherApp\\WeatherApp.csproj",
+        "packagesPath": "C:\\Users\\Penot Clement\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Penot Clement\\Desktop\\Dev\\CSharp\\WeatherApp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\clemc\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Penot Clement\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
@@ -83,7 +83,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.414\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.416\\RuntimeIdentifierGraph.json"
         }
       }
     }
