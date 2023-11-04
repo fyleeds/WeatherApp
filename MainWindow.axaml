@@ -157,6 +157,7 @@
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                     <TextBlock Text="Ville par défaut:" Width="150" VerticalAlignment="Center"/>
                     <TextBox x:Name="DefaultCity" Width="200" />
+                    <Button Content="Sauvegarder" Click="SauvegardeVilleDefaut" Width="100" Margin="10,0,0,0"/>
                 </StackPanel>
                 <!-- Sélection de la langue -->
                 <StackPanel Orientation="Horizontal">
@@ -211,9 +212,7 @@
                         <ComboBoxItem Content="Zoulou" Tag="zu"/>
                         <!-- ... -->
                     </ComboBox>
-
-
-
+                    
                 </StackPanel>
             </StackPanel>
         </TabItem>       

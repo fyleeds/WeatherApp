@@ -24,6 +24,16 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 // Les classes et les propriétés
+
+public class ApplicationSettings
+{
+    public string DefaultLocation { get; set; }
+}
+
+public class SettingsRoot
+{
+    public ApplicationSettings ApplicationSettings { get; set; }
+}
 public class WeatherForecast
 {
     // Les propriétés de la classe
@@ -137,8 +147,16 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-        // Initialisation des composants de l'interface
         
+        //initialisation par ville par défaut
+        if (ExtractionVilleDefaut() != "")
+        {
+            ChargerMeteoActuelle(ExtractionVilleDefaut());
+            ChargerMeteoPrevu(ExtractionVilleDefaut());
+        }
+
+        // Initialisation des composants de l'interface
+
     }
 
     public async void ChargerMeteoActuelle(string input, string lang="fr")
@@ -164,7 +182,7 @@ public partial class MainWindow : Window
                     // Lisez le contenu de la réponse
                     string contenu = await réponse.Content.ReadAsStringAsync();
                     var weatherData = JsonConvert.DeserializeObject<weatherData>(contenu);
-                    NomVille.Text = $"Ville : {weatherData.name}";
+                    NomVille.Text = $"{weatherData.name}";
                     TempVille.Text = $"{weatherData.main.Temp}°C";
                     Humidite.Text = $"Humidité : {weatherData.main.Humidity}%";
                     Description.Text = $"{weatherData.weather[0].Description}";
@@ -297,6 +315,38 @@ public partial class MainWindow : Window
             }
         }
     }
+    
+    public string ExtractionVilleDefaut()
+    {
+        string fileName = "options.json"; 
+
+        string jsonString = File.ReadAllText(Path.GetFullPath(fileName));
+        
+        var settings = JsonConvert.DeserializeObject<SettingsRoot>(jsonString);
+        
+        return settings.ApplicationSettings.DefaultLocation;
+    }
+    
+    public void SauvegardeVilleDefaut(object sender, RoutedEventArgs e)
+    {
+        string fileName = "options.json"; 
+        // Étape 1: Lire le fichier JSON
+        string jsonString = File.ReadAllText(Path.GetFullPath(fileName));
+
+        // Étape 2: Désérialiser le JSON dans un objet
+        var options = JsonConvert.DeserializeObject<SettingsRoot>(jsonString);
+
+        // Étape 3: Modifier les propriétés
+        options.ApplicationSettings.DefaultLocation = DefaultCity.Text;
+
+        // Étape 4: Sérialiser l'objet modifié en JSON
+        var updatedJsonString = JsonConvert.SerializeObject(options, Formatting.Indented);
+
+        // Étape 5: Écrire le JSON mis à jour dans le fichier
+        File.WriteAllText(Path.GetFullPath(fileName), updatedJsonString);
+        
+    }
+    
     public void RechercherMeteo(object sender, RoutedEventArgs e)
     {
         // Méthode pour déclencher la recherche météorologique
