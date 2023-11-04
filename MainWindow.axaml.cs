@@ -6,6 +6,7 @@ using Avalonia.Markup.Xaml;
 using Avalonia.Media.Imaging;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -21,9 +22,10 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
+// Les classes et les propriétés
 public class WeatherForecast
 {
-
+    // Les propriétés de la classe
     public List<Forecast> list { get; set; }
     [JsonProperty("city")]
     public City city { get; set; }
@@ -31,29 +33,28 @@ public class WeatherForecast
 
 public class Forecast
 {
-    
+    // Les propriétés de la classe
     [JsonProperty("main")]
     public Main main { get; set; }
     [JsonProperty("weather")]
     public List<Weather2> weather { get; set; }
     [JsonProperty("dt_txt")]
     public string dt { get; set; }
-
-    
 }
 
 public class Main
 {
+    // Les propriétés de la classe
     [JsonProperty("temp")]
     public double Temp { get; set; }
     
     [JsonProperty("humidity")]
     public int Humidity { get; set; }
-
 }
 
 public class Weather2
 {
+    // Les propriétés de la classe
     [JsonProperty("description")]
     public string description { get; set; }
     [JsonProperty("icon")]
@@ -62,38 +63,35 @@ public class Weather2
 
 public class City
 {
-
+    // Les propriétés de la classe
     [JsonProperty("name")] public string Name { get; set; }
-
     [JsonProperty("coord")] public Coordinates Coord { get; set; }
 }
 
 public class Coordinates
 {
+    // Les propriétés de la classe
     [JsonProperty("lat")]
     public double Lat { get; set; }
-
     [JsonProperty("lon")]
     public double Lon { get; set; }
 }
-//end
+//fin de la section Api MeteoPrevu
 
 public class weatherData
 {
+    // Les propriétés de la classe
     public List<Weather> weather { get; set; }
-    public string @base { get; set; }
+
     public MainData main { get; set; }
-    public int visibility { get; set; }
-    public Wind wind { get; set; }
-    public long dt { get; set; }
-    public int timezone { get; set; }
-    public int id { get; set; }
+
     public string name { get; set; }
-    public int cod { get; set; }
+
 }
 
 public class Weather
 {
+    // Les propriétés de la classe
     public int Id { get; set; }
     public string Main { get; set; }
     public string Description { get; set; }
@@ -102,91 +100,72 @@ public class Weather
 
 public class MainData
 {
+    // Les propriétés de la classe
     public double Temp { get; set; }
-    public double FeelsLike { get; set; }
-    public double TempMin { get; set; }
-    public double TempMax { get; set; }
-    public int Pressure { get; set; }
     public int Humidity { get; set; }
 }
 
-public class Wind
-{
-    public double Speed { get; set; }
-    public int Deg { get; set; }
-}
 
 public class Location
 {
+    // Les propriétés de la classe
     [JsonProperty("name")]
-    public string NameCity { get; set; }
-
+    public string NomVille { get; set; }
     [JsonProperty("lat")]
     public double Latitude { get; set; }
-
     [JsonProperty("lon")]
     public double Longitude { get; set; }
-
 }
 
-
-
+// La classe principale de l'application
 public partial class MainWindow : Window
 {
-
-
+    // Les variables de la classe
     public String imageUrl;
-    public Image Weatherimage;
     public TextBlock Lienicon;
 
     public MainWindow()
     {
-
         InitializeComponent();
-        //T1.Text = "Today 10° C";
-        //T2.Text = "Partially Cloudy";
-        //T3.Text = "Precipitation: 25 %";
-        //T4.Text = "High:20°C";
-        //T5.Text = "Low 0°C";
-        //T6.Text = "Feels like : 10°C";
-        Weatherimage = this.FindControl<Image>("WeatherImage");
+        // Initialisation des composants de l'interface
+        
 
     }
 
-    public async void test(string input)
+    public async void ChargerMeteoActuelle(string input)
     {
+        // Code asynchrone pour tester la récupération des données météorologiques
         using (HttpClient client = new HttpClient())
         {
             try
             {
                 Location newLocation = new Location {};
-                (newLocation.NameCity,newLocation.Latitude,newLocation.Longitude) = await GetCityAsync(input);
+                (newLocation.NomVille,newLocation.Latitude,newLocation.Longitude) = await ObtenirCoordonneesVilleAsync(input);
 
                 // Spécifiez l'URL de l'API que vous souhaitez interroger
                 string apiUrl =
                     $"https://api.openweathermap.org/data/2.5/weather?lat={newLocation.Latitude}&lon={newLocation.Longitude}&appid=19e8ae246f03ffc54bbdae83a37e7315&lang=fr&units=metric&exclud=name";
 
                 // Effectuez une requête GET
-                HttpResponseMessage response = await client.GetAsync(apiUrl);
+                HttpResponseMessage réponse = await client.GetAsync(apiUrl);
 
                 // Vérifiez si la requête a réussi (code de statut 200 OK)
-                if (response.IsSuccessStatusCode)
+                if (réponse.IsSuccessStatusCode)
                 {
                     // Lisez le contenu de la réponse
-                    string content = await response.Content.ReadAsStringAsync();
-                    string jsonString = content;
-                    var weatherData = JsonConvert.DeserializeObject<weatherData>(jsonString);
-                    NameVille.Text = $"Ville : {weatherData.name}";
+                    string contenu = await réponse.Content.ReadAsStringAsync();
+                    var weatherData = JsonConvert.DeserializeObject<weatherData>(contenu);
+                    NomVille.Text = $"Ville : {weatherData.name}";
                     TempVille.Text = $"Température : {weatherData.main.Temp}°C";
                     Humidite.Text = $"Humidité : {weatherData.main.Humidity}%";
                     Description.Text = $"Description météo : {weatherData.weather[0].Description}";
                     //LienIcon= $"Lien icon : http://openweathermap.org/img/w/{weatherData.weather[0].Icon}.png";
                     imageUrl = $"http://openweathermap.org/img/w/{weatherData.weather[0].Icon}.png";
-                    LoadImageFromUrl(imageUrl);
+                    ChargerImageDepuisUrl(imageUrl,"MeteoImage");
                 }
                 else
                 {
-                    Console.WriteLine($"La requête a échoué avec le code de statut : {response.StatusCode}");
+                    Console.WriteLine($"La requête a échoué avec le code de statut : {réponse.StatusCode}");
                 }
             }
             catch (Exception ex)
@@ -195,49 +174,48 @@ public partial class MainWindow : Window
             }
         }
     }
-    public async void testForecast(string input)
+    public async void ChargerMeteoPrevu(string input)
     {
+        // Code asynchrone pour tester la récupération des prévisions météorologiques
+    
         using (HttpClient client = new HttpClient())
         {
             try
             {
                 Location newLocation = new Location {};
-                (newLocation.NameCity,newLocation.Latitude,newLocation.Longitude) = await GetCityAsync(input);
-                Console.WriteLine($"Third Check : Name : {newLocation.NameCity}Latitude: {newLocation.Latitude}, Longitude: {newLocation.Longitude}");
+                (newLocation.NomVille,newLocation.Latitude,newLocation.Longitude) = await ObtenirCoordonneesVilleAsync(input);
 
                 // Spécifiez l'URL de l'API que vous souhaitez interroger
                 string apiUrl =
                     $"https://api.openweathermap.org/data/2.5/forecast?lat={newLocation.Latitude}&lon={newLocation.Longitude}&appid=19e8ae246f03ffc54bbdae83a37e7315&lang=fr&units=metric&exclud=name";
 
                 // Effectuez une requête GET
-                HttpResponseMessage response = await client.GetAsync(apiUrl);
+                HttpResponseMessage réponse = await client.GetAsync(apiUrl);
 
                 // Vérifiez si la requête a réussi (code de statut 200 OK)
-                if (response.IsSuccessStatusCode)
+                if (réponse.IsSuccessStatusCode)
                 {
                     // Lisez le contenu de la réponse
-                    string content = await response.Content.ReadAsStringAsync();
-                    var forecastData = JsonConvert.DeserializeObject<WeatherForecast>(content);
+                    string contenu = await réponse.Content.ReadAsStringAsync();
+                    var forecastData = JsonConvert.DeserializeObject<WeatherForecast>(contenu);
                     
                     if (forecastData?.list != null)
                     {
                         int i = 0;
-                        NameVille1.Text = $" {forecastData.city.Name}";
+                        NomVille1.Text = $" {forecastData.city.Name}";
                         Coords1.Text = $"lat :{forecastData.city.Coord.Lat} , lon : {forecastData.city.Coord.Lon}";
-                        NameVille2.Text = $" {forecastData.city.Name}";
+                        NomVille2.Text = $" {forecastData.city.Name}";
                         Coords2.Text = $"lat :{forecastData.city.Coord.Lat} , lon : {forecastData.city.Coord.Lon}";
-                        NameVille3.Text = $" {forecastData.city.Name}";
+                        NomVille3.Text = $" {forecastData.city.Name}";
                         Coords3.Text = $"lat :{forecastData.city.Coord.Lat} , lon : {forecastData.city.Coord.Lon}";
-                        NameVille4.Text = $" {forecastData.city.Name}";
+                        NomVille4.Text = $" {forecastData.city.Name}";
                         Coords4.Text = $"lat :{forecastData.city.Coord.Lat} , lon : {forecastData.city.Coord.Lon}";
-                        NameVille5.Text = $" {forecastData.city.Name}";
+                        NomVille5.Text = $" {forecastData.city.Name}";
                         Coords5.Text = $"lat :{forecastData.city.Coord.Lat} , lon : {forecastData.city.Coord.Lon}";
                         foreach (var forecast in forecastData.list)
                         {
                             
-                            //Console.WriteLine($"Date and Time: {forecast.dt}");
-                            
-                            if (CompareDateNoon(forecast.dt))
+                            if (ComparerDateMidi(forecast.dt))
                             {
                                 i++;
                                 switch (i)
@@ -247,6 +225,8 @@ public partial class MainWindow : Window
                                         TempVille1.Text = $"{forecast.main.Temp}°C";
                                         Description1.Text = $"{forecast.weather[0].description}";
                                         Date1.Text = $"{forecast.dt}";
+                                        imageUrl = $"http://openweathermap.org/img/w/{forecast.weather[0].icon}.png";
+                                        ChargerImageDepuisUrl(imageUrl,"MeteoImage1");
 
                                         Console.WriteLine(
                                             $"Date and Time: {forecast.dt}, Temperature: {forecast.main.Temp}");
@@ -257,6 +237,8 @@ public partial class MainWindow : Window
                                         TempVille2.Text = $"{forecast.main.Temp}°C";
                                         Description2.Text = $"{forecast.weather[0].description}";
                                         Date2.Text = $"{forecast.dt}";
+                                        imageUrl = $"http://openweathermap.org/img/w/{forecast.weather[0].icon}.png";
+                                        ChargerImageDepuisUrl(imageUrl,"MeteoImage2");
 
                                         Console.WriteLine(
                                             $"Date and Time: {forecast.dt}, Temperature: {forecast.main.Temp}");
@@ -267,6 +249,8 @@ public partial class MainWindow : Window
                                         TempVille3.Text = $"{forecast.main.Temp}°C";
                                         Description3.Text = $"{forecast.weather[0].description}";
                                         Date3.Text = $"{forecast.dt}";
+                                        imageUrl = $"http://openweathermap.org/img/w/{forecast.weather[0].icon}.png";
+                                        ChargerImageDepuisUrl(imageUrl,"MeteoImage3");
 
                                         Console.WriteLine(
                                             $"Date and Time: {forecast.dt}, Temperature: {forecast.main.Temp}");
@@ -277,6 +261,8 @@ public partial class MainWindow : Window
                                         TempVille4.Text = $"{forecast.main.Temp}°C";
                                         Description4.Text = $"{forecast.weather[0].description}";
                                         Date4.Text = $"{forecast.dt}";
+                                        imageUrl = $"http://openweathermap.org/img/w/{forecast.weather[0].icon}.png";
+                                        ChargerImageDepuisUrl(imageUrl,"MeteoImage4");
 
                                         Console.WriteLine(
                                             $"Date and Time: {forecast.dt}, Temperature: {forecast.main.Temp}");
@@ -286,7 +272,9 @@ public partial class MainWindow : Window
                                         Humidite5.Text = $"Humidité : {forecast.main.Humidity}%";
                                         TempVille5.Text = $"{forecast.main.Temp}°C";
                                         Description5.Text = $"{forecast.weather[0].description}";
-                                        Date5.Text = $"{forecast.dt}";
+                                        Date5.Text = $"{ConvertirDate(forecast.dt)}";
+                                        imageUrl = $"http://openweathermap.org/img/w/{forecast.weather[0].icon}.png";
+                                        ChargerImageDepuisUrl(imageUrl,"MeteoImage5");
 
                                         Console.WriteLine(
                                             $"Date and Time: {forecast.dt}, Temperature: {forecast.main.Temp}");
@@ -296,9 +284,7 @@ public partial class MainWindow : Window
 
 
                                 //LienIcon= $"Lien icon : http://openweathermap.org/img/w/{weatherData.weather[0].Icon}.png";
-                                //imageUrl = $"http://openweathermap.org/img/w/{weatherData.weather[0].Icon}.png";
-                                //LoadImageFromUrl(imageUrl);
-                                //Console.WriteLine($"Date and Time: {forecast.dt}, Temperature: {forecast.main.Temp}");
+                                
                             }
                             
                         }
@@ -306,7 +292,7 @@ public partial class MainWindow : Window
                 }
                 else
                 {
-                    Console.WriteLine($"La requête a échoué avec le code de statut : {response.StatusCode}");
+                    Console.WriteLine($"La requête a échoué avec le code de statut : {réponse.StatusCode}");
                 }
             }
             catch (Exception ex)
@@ -315,23 +301,37 @@ public partial class MainWindow : Window
             }
         }
     }
-    public void SearchWeather(object sender, RoutedEventArgs e)
+    public void RechercherMeteo(object sender, RoutedEventArgs e)
     {
-        string input = SearchBox.Text;
-        test(input);
-        testForecast(input);
+        // Méthode pour déclencher la recherche météorologique
+        string entrée = SearchBox.Text;
+        ChargerMeteoActuelle(entrée);
+        ChargerMeteoPrevu(entrée);
 
     }
 
-    public bool CompareDateNoon(string dateTime)
+    public bool ComparerDateMidi(string dateTime)
     {
+        // Méthode pour comparer les dates
         return dateTime.Substring(11) == "12:00:00";
     }
-
-
- 
-    public async void LoadImageFromUrl(string imageUrl)
+    
+    public string ConvertirDate(string dateString)
     {
+        // Méthode pour convertir les dates
+        CultureInfo cultureInfo = new CultureInfo("fr-FR");
+
+        // date en string convertie en dateTime 
+        DateTime dateFormaté = DateTime.ParseExact(dateString, "yyyy-MM-dd HH:mm:ss", cultureInfo);
+        
+        // formater en date francaise
+        return dateFormaté.ToString("dddd, d MMMM yyyy 'à' HH:mm:ss", cultureInfo);
+
+    }
+ 
+    public async void ChargerImageDepuisUrl(string imageUrl,string NomImage)
+    {
+        // Méthode asynchrone pour charger une image depuis une URL
         try
         {
             using (var httpClient = new HttpClient())
@@ -340,7 +340,9 @@ public partial class MainWindow : Window
                 using (var stream = new MemoryStream(imageBytes))
                 {
                     var bitmap = new Bitmap(stream);
-                    Weatherimage.Source = bitmap;
+                    var MeteoImageRef = this.FindControl<Image>(NomImage);
+                    MeteoImageRef.Source = bitmap;
+
                 }
             }
         }
@@ -351,8 +353,9 @@ public partial class MainWindow : Window
         }
     }
 
-    public async Task<(string NameLocation, double Lat, double Lon)> GetCityAsync(string input)
+    public async Task<(string NomVille, double Lat, double Lon)> ObtenirCoordonneesVilleAsync(string input)
     {
+        // Méthode asynchrone pour obtenir les coordonnées d'une ville
         string apiUrl =
             $"http://api.openweathermap.org/geo/1.0/direct?q={input}&limit=1&appid=19e8ae246f03ffc54bbdae83a37e7315";
 
@@ -360,38 +363,39 @@ public partial class MainWindow : Window
         {
             try
             {
-                // Send a GET request to the specified URL
+                // Envoyez une requête GET à l'URL spécifiée
                 HttpResponseMessage response = await client.GetAsync(apiUrl);
                 if (response.IsSuccessStatusCode)
                 {
-                    // Read the content of the response as a string
+                    // Lisez le contenu de la réponse sous forme de chaîne
                     string jsonContent = await response.Content.ReadAsStringAsync();
 
-                    //list the name of all cities
-                    var Cities = JsonConvert.DeserializeObject<List<Location>>(jsonContent);
-                    
-                    // Check if any cities were found
-                    if (Cities == null)
+                    // Lister le nom de toutes les villes
+                    var Villes = JsonConvert.DeserializeObject<List<Location>>(jsonContent);
+                
+                    // Vérifiez si des villes ont été trouvées
+                    if (Villes == null)
                     {
-                        return (String.Empty, 0, 0);
+                        return (string.Empty, 0, 0);
                     } 
-                    var City = Cities[0];
-                    return (City.NameCity, City.Latitude, City.Longitude);
-                    
+                    var Ville = Villes[0];
+                    return (Ville.NomVille, Ville.Latitude, Ville.Longitude);
+                
                 }
                 else
                 {
-                    Console.WriteLine($"HTTP Error: {response.StatusCode}");
+                    Console.WriteLine($"Erreur HTTP : {response.StatusCode}");
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                Console.WriteLine($"Erreur : {ex.Message}");
             }
         }
 
-        return (String.Empty, 0, 0);
+        return (string.Empty, 0, 0);
     }
+
     
 
 }

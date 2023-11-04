@@ -6,9 +6,6 @@
         x:Class="WeatherApp.MainWindow"
         Title="WeatherApp">
 
-
-        <!-- <TabControl Margin="10" Background="WhiteSmoke" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"> -->
-
     <TabControl>
          <!-- Onglet 1 : Recherche de ville -->
         <TabItem Header="Recherche" Background="LightGray" HorizontalAlignment="Stretch">
@@ -22,20 +19,17 @@
                 <!-- Section de recherche de ville -->
                 <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,10">
                     <TextBox x:Name="SearchBox" Width="200"/>
-                    <Button Content="Rechercher" Click="SearchWeather" Width="100" Margin="10,0,0,0"/>
+                    <Button Content="Rechercher" Click="RechercherMeteo" Width="100" Margin="10,0,0,0"/>
                 </StackPanel>
-
-
-                
 
                 <!-- Résultats de la recherche -->
                 <StackPanel Grid.Row="1">
-                    <TextBlock x:Name="NameVille" FontWeight="Bold" FontSize="20" />
+                    <TextBlock x:Name="NomVille" FontWeight="Bold" FontSize="20" />
                     <TextBlock x:Name="LatLong" Margin="0,5"/>
                     <TextBlock x:Name="TempVille" Margin="0,5"/>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <TextBlock x:Name="Description" Margin="0,5,10,5"/>
-                    <Image x:Name="WeatherImage" Width="30" Height="30"/>
+                    <Image x:Name="MeteoImage" Width="30" Height="30"/>
                 </StackPanel>
                     <TextBlock x:Name="Humidite" Margin="0,5"/>
                 </StackPanel>
@@ -51,7 +45,7 @@
                         <StackPanel Spacing="5">
                             <!-- Informations principales -->
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                                <!-- <Image Source="path_to_broken_clouds_icon" Width="20" Height="20"/> -->
+                                <Image x:Name="MeteoImage1" Width="20" Height="20"/>
                                 <TextBlock x:Name="TempVille1" Width="100" FontSize="16"/>
                                 <TextBlock x:Name="Description1" Width="150" FontSize="16" HorizontalAlignment="Stretch"/>
                             </StackPanel>
@@ -59,7 +53,7 @@
                             <StackPanel Spacing="5">
                                 <TextBlock x:Name="Humidite1" FontSize="14"/>
                                 <TextBlock x:Name="Date1" FontSize="14"/>
-                                <TextBlock x:Name="NameVille1" FontSize="14"/>
+                                <TextBlock x:Name="NomVille1" FontSize="14"/>
                                 <TextBlock x:Name="Coords1" FontSize="14"/>
                                 <!-- ... Autres détails ... -->
                             </StackPanel>
@@ -74,7 +68,7 @@
                         <StackPanel Spacing="10">
                             <!-- Informations principales -->
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                                <!-- <Image Source="path_to_broken_clouds_icon" Width="20" Height="20"/> -->
+                                <Image x:Name="MeteoImage2" Width="20" Height="20"/>
                                 <TextBlock x:Name="TempVille2" Width="100" FontSize="16"/>
                                 <TextBlock x:Name="Description2" Width="150" FontSize="16" HorizontalAlignment="Stretch"/>
                             </StackPanel>
@@ -82,7 +76,7 @@
                             <StackPanel Spacing="5">
                                 <TextBlock x:Name="Humidite2" FontSize="14"/>
                                 <TextBlock  x:Name="Date2" FontSize="14"/>
-                                <TextBlock x:Name="NameVille2" FontSize="14"/>
+                                <TextBlock x:Name="NomVille2" FontSize="14"/>
                                 <TextBlock x:Name="Coords2" FontSize="14"/>
                                 <!-- ... Autres détails ... -->
                             </StackPanel>
@@ -95,7 +89,7 @@
                         <StackPanel Spacing="10">
                             <!-- Informations principales -->
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                                <!-- <Image Source="path_to_broken_clouds_icon" Width="20" Height="20"/> -->
+                                <Image x:Name="MeteoImage3" Width="20" Height="20"/>
                                 <TextBlock x:Name="TempVille3" Width="100" FontSize="16"/>
                                 <TextBlock x:Name="Description3" Width="150" FontSize="16" HorizontalAlignment="Stretch"/>
                             </StackPanel>
@@ -103,9 +97,8 @@
                             <StackPanel Spacing="5">
                                 <TextBlock x:Name="Humidite3" FontSize="14"/>
                                 <TextBlock x:Name="Date3" FontSize="14"/>
-                                <TextBlock x:Name="NameVille3" FontSize="14"/>
-                                <TextBlock x:Name="Coords3" FontSize="14"/>
-                                
+                                <TextBlock x:Name="NomVille3" FontSize="14"/>
+                                <TextBlock x:Name="Coords3" FontSize="14"/>                                
                                 <!-- ... Autres détails ... -->
                             </StackPanel>
                         </StackPanel>
@@ -117,7 +110,7 @@
                         <StackPanel Spacing="10">
                             <!-- Informations principales -->
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                                <!-- <Image Source="path_to_broken_clouds_icon" Width="20" Height="20"/> -->
+                                <Image x:Name="MeteoImage4" Width="20" Height="20"/>
                                 <TextBlock x:Name="TempVille4" Width="100" FontSize="16"/>
                                 <TextBlock x:Name="Description4" Width="150" FontSize="16" HorizontalAlignment="Stretch"/>
                             </StackPanel>
@@ -125,9 +118,8 @@
                             <StackPanel Spacing="5">
                                 <TextBlock x:Name="Humidite4" FontSize="14"/>
                                 <TextBlock x:Name="Date4" FontSize="14"/>
-                                <TextBlock x:Name="NameVille4" FontSize="14"/>
+                                <TextBlock x:Name="NomVille4" FontSize="14"/>
                                 <TextBlock x:Name="Coords4" FontSize="14"/>
-                                
                                 <!-- ... Autres détails ... -->
                             </StackPanel>
                         </StackPanel>
@@ -139,7 +131,7 @@
                         <StackPanel Spacing="10">
                             <!-- Informations principales -->
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                                <!-- <Image Source="path_to_broken_clouds_icon" Width="20" Height="20"/> -->
+                                <Image x:Name="MeteoImage5" Width="20" Height="20"/>
                                 <TextBlock x:Name="TempVille5" Width="100" FontSize="16"/>
                                 <TextBlock x:Name="Description5" Width="150" FontSize="16" HorizontalAlignment="Stretch"/>
                             </StackPanel>
@@ -147,29 +139,25 @@
                             <StackPanel Spacing="5">
                                 <TextBlock x:Name="Humidite5" FontSize="14"/>
                                 <TextBlock x:Name="Date5" FontSize="14"/>
-                                <TextBlock x:Name="NameVille5" FontSize="14"/>
+                                <TextBlock x:Name="NomVille5" FontSize="14"/>
                                 <TextBlock x:Name="Coords5" FontSize="14"/>
                                 <!-- ... Autres détails ... -->
                             </StackPanel>
                         </StackPanel>
                     </Expander>
                 </ListBoxItem>
-            </ListBox>
-
-            
+            </ListBox>           
         </TabItem>
 
         <!-- Troisième onglet -->
         <TabItem Header="Paramètres" Background="LightGray">
             <!-- Onglet 3 : Paramètres -->
-
             <StackPanel Margin="50">
                 <!-- Ville par défaut -->
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                     <TextBlock Text="Ville par défaut:" Width="150" VerticalAlignment="Center"/>
                     <TextBox x:Name="DefaultCity" Width="200" />
                 </StackPanel>
-
                 <!-- Sélection de la langue -->
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Langue:" Width="150" VerticalAlignment="Center"/>
