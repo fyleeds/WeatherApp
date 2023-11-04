@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
+using Avalonia.Interactivity;
 using Avalonia.Media.Imaging;
 using Newtonsoft.Json;
 namespace WeatherApp;
@@ -91,17 +92,17 @@ public partial class MainWindow : Window
         //T5.Text = "Low 0°C";
         //T6.Text = "Feels like : 10°C";
         Weatherimage = this.FindControl<Image>("WeatherImage");
-        test();
+
     }
 
-    public async void test()
+    public async void test(string input)
     {
         using (HttpClient client = new HttpClient())
         {
             try
             {
                 Location newLocation = new Location {};
-                (newLocation.NameCity,newLocation.Latitude,newLocation.Longitude) = await GetCityAsync("London");
+                (newLocation.NameCity,newLocation.Latitude,newLocation.Longitude) = await GetCityAsync(input);
                 Console.WriteLine($"Second Check : Name : {newLocation.NameCity}Latitude: {newLocation.Latitude}, Longitude: {newLocation.Longitude}");
 
                 // Spécifiez l'URL de l'API que vous souhaitez interroger
@@ -121,6 +122,7 @@ public partial class MainWindow : Window
                     NameVille.Text = $"Ville : {weatherData.name}";
                     TempVille.Text = $"Température : {weatherData.main.Temp}°C";
                     Humidite.Text = $"Humidité : {weatherData.main.Humidity}%";
+                    Humidite2.Text = $"Humidité : {weatherData.main.Humidity}%";
                     Description.Text = $"Description météo : {weatherData.weather[0].Description}";
                     // LienIcon.Text = $"Lien icon : http://openweathermap.org/img/w/{weatherData.weather[0].Icon}.png";
                     imageUrl = $"http://openweathermap.org/img/w/{weatherData.weather[0].Icon}.png";
@@ -137,7 +139,13 @@ public partial class MainWindow : Window
             }
         }
     }
-
+    public void SearchWeather(object sender, RoutedEventArgs e)
+    {
+        string input = SearchBox.Text;
+        test(input);
+        
+        // You can now use cityName as the input for your search logic.
+    }
     public async void LoadImageFromUrl(string imageUrl)
     {
         try
@@ -163,7 +171,7 @@ public partial class MainWindow : Window
     {
         Console.WriteLine("here");
         string apiUrl =
-            $"http://api.openweathermap.org/geo/1.0/direct?q=London&limit=1&appid=19e8ae246f03ffc54bbdae83a37e7315";
+            $"http://api.openweathermap.org/geo/1.0/direct?q={input}&limit=1&appid=19e8ae246f03ffc54bbdae83a37e7315";
 
         using (HttpClient client = new HttpClient())
         {
@@ -178,7 +186,7 @@ public partial class MainWindow : Window
 
                     //list the name of all cities
                     var Cities = JsonConvert.DeserializeObject<List<Location>>(jsonContent);
-                    //Console.WriteLine($"result1:{Cities}");
+
                     // Check if any cities were found
                     if (Cities == null)
                     {

@@ -21,7 +21,7 @@
                 <!-- Section de recherche de ville -->
                 <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,10">
                     <TextBox x:Name="SearchBox" Width="200" Text="Entrez le nom de la ville..."/>
-                    <Button Content="Rechercher" Width="100" Margin="10,0,0,0"/>
+                    <Button Content="Rechercher" Click="SearchWeather" Width="100" Margin="10,0,0,0"/>
                 </StackPanel>
 
                 <!-- Résultats de la recherche -->
@@ -51,7 +51,7 @@
                             </StackPanel>
                             <!-- Contenu détaillé (visible lors de l'expansion) -->
                             <StackPanel Spacing="5">
-                                <TextBlock Text="Détail: Humidité 60%" FontSize="14"/>
+                                <TextBlock x:Name="Humidite2" FontSize="14"/>
                                 <TextBlock Text="Détail: Date et heure de la prévision" FontSize="14"/>
                                 <TextBlock Text="Détail: Latitude et longitude" FontSize="14"/>
                                 <!-- ... Autres détails ... -->
