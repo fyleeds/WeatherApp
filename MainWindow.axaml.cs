@@ -12,6 +12,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 using Avalonia.Interactivity;
 using Avalonia.Media.Imaging;
+using Avalonia.Platform;
 using HarfBuzzSharp;
 using Newtonsoft.Json;
 namespace WeatherApp;
@@ -316,34 +317,38 @@ public partial class MainWindow : Window
         }
     }
     
-    public string ExtractionVilleDefaut()
-    {
-        string fileName = "options.json"; 
 
-        string jsonString = File.ReadAllText(Path.GetFullPath(fileName));
-        
-        var settings = JsonConvert.DeserializeObject<SettingsRoot>(jsonString);
-        
-        return settings.ApplicationSettings.DefaultLocation;
-    }
     
     public void SauvegardeVilleDefaut(object sender, RoutedEventArgs e)
     {
-        string fileName = "options.json"; 
-        // Étape 1: Lire le fichier JSON
-        string jsonString = File.ReadAllText(Path.GetFullPath(fileName));
+        string jsonString;
+        Uri fileUri = new Uri("avares://WeatherApp/Assets/options.json");
+        
+        string baseDir = AppContext.BaseDirectory;
 
-        // Étape 2: Désérialiser le JSON dans un objet
-        var options = JsonConvert.DeserializeObject<SettingsRoot>(jsonString);
-
-        // Étape 3: Modifier les propriétés
-        options.ApplicationSettings.DefaultLocation = DefaultCity.Text;
-
-        // Étape 4: Sérialiser l'objet modifié en JSON
-        var updatedJsonString = JsonConvert.SerializeObject(options, Formatting.Indented);
-
-        // Étape 5: Écrire le JSON mis à jour dans le fichier
-        File.WriteAllText(Path.GetFullPath(fileName), updatedJsonString);
+        int binIndex = baseDir.IndexOf("\\bin", StringComparison.OrdinalIgnoreCase);
+        string jsonPath = baseDir.Substring(0, binIndex) + "/Assets/options.json";
+        
+        using (var stream = AssetLoader.Open(fileUri))
+        using (var lecteur = new StreamReader(stream))
+        {
+            // Lire le flux en tant que chaîne de caractères.
+            jsonString = lecteur.ReadToEnd();
+        }
+        // Modifier les propriétés
+        var paramètres = JsonConvert.DeserializeObject<SettingsRoot>(jsonString);
+        
+        paramètres.ApplicationSettings.DefaultLocation = DefaultCity.Text;
+        
+        //  Sérialiser l'objet modifié en JSON
+        var updatedJsonString = JsonConvert.SerializeObject(paramètres, Formatting.Indented);
+        
+        using (var fileStream = new FileStream(jsonPath, FileMode.Create, FileAccess.Write))
+        using (var ecrivain = new StreamWriter(fileStream))
+        {
+            // Étape 5: Écrire le JSON mis à jour dans le fichier
+               ecrivain.Write(updatedJsonString);
+            }
         
     }
     
@@ -389,7 +394,18 @@ public partial class MainWindow : Window
         return dateFormaté.ToString("dddd, d MMMM yyyy 'à' HH:mm:ss", cultureInfo);
 
     }
- 
+    public string ExtractionVilleDefaut()
+    {
+        using (var stream = AssetLoader.Open(new Uri("avares://WeatherApp/Assets/options.json")))
+        using (var lecteur = new StreamReader(stream))
+        {
+           // Lire le flux en tant que chaîne de caractères.
+           var jsonString = lecteur.ReadToEnd();
+           var paramètres = JsonConvert.DeserializeObject<SettingsRoot>(jsonString);
+
+           return paramètres.ApplicationSettings.DefaultLocation;
+        }
+    }
     public async void ChargerImageDepuisUrl(string imageUrl,string NomImage)
     {
         // Méthode asynchrone pour charger une image depuis une URL
