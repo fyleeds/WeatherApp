@@ -472,19 +472,11 @@ public partial class MainWindow : Window
     public string ExtractionVilleDefaut()
     {
         string jsonString;
-        //Uri fileUri = new Uri("avares://WeatherApp/Assets/options.json");
        
         string baseDir = AppContext.BaseDirectory;
         int binIndex = baseDir.IndexOf("\\bin", StringComparison.OrdinalIgnoreCase);
         string jsonPath = baseDir.Substring(0, binIndex) + "/Assets/options.json";
-        
-        
-        //using (var stream = AssetLoader.Open(fileUri))
-        //using (var lecteur = new StreamReader(stream))
-        //{
-        // Lire le flux en tant que chaîne de caractères.
-        //jsonString = lecteur.ReadToEnd();
-        //}
+
         using (var fileStream = new FileStream(jsonPath, FileMode.Open, FileAccess.Read))
         using (var lecteur = new StreamReader(fileStream))
         {
@@ -500,23 +492,16 @@ public partial class MainWindow : Window
     public void SauvegardeVilleDefaut(object sender, RoutedEventArgs e)
     {
         string jsonString;
-        //Uri fileUri = new Uri("avares://WeatherApp/Assets/options.json");
        
         string baseDir = AppContext.BaseDirectory;
         int binIndex = baseDir.IndexOf("\\bin", StringComparison.OrdinalIgnoreCase);
         string jsonPath = baseDir.Substring(0, binIndex) + "/Assets/options.json";
         
-        
-        //using (var stream = AssetLoader.Open(fileUri))
-        //using (var lecteur = new StreamReader(stream))
-        //{
-            // Lire le flux en tant que chaîne de caractères.
-            //jsonString = lecteur.ReadToEnd();
-        //}
+
         using (var fileStream = new FileStream(jsonPath, FileMode.Open, FileAccess.Read))
         using (var lecteur = new StreamReader(fileStream))
         {
-            // Étape 5: Écrire le JSON mis à jour dans le fichier
+            // Écrire le JSON mis à jour dans le fichier
             jsonString = lecteur.ReadToEnd();
         }
         // Modifier les propriétés
