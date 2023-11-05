@@ -260,7 +260,7 @@ public partial class MainWindow : Window
                                             Humidite1.Text = $"Humidité : {forecast.main.Humidity}%";
                                             TempVille1.Text = $"{forecast.main.Temp}°C";
                                             Description1.Text = $"{forecast.weather[0].description}";
-                                            Date1.Text = $"{ConvertirDate(forecast.dt)}";
+                                            Date1.Text = $"{ConvertirDate(forecast.dt,lang)}";
                                             imageUrl =
                                                 $"http://openweathermap.org/img/w/{forecast.weather[0].icon}.png";
                                             ChargerImageDepuisUrl(imageUrl, "MeteoImage1");
@@ -271,7 +271,7 @@ public partial class MainWindow : Window
                                             Humidite2.Text = $"Humidité : {forecast.main.Humidity}%";
                                             TempVille2.Text = $"{forecast.main.Temp}°C";
                                             Description2.Text = $"{forecast.weather[0].description}";
-                                            Date2.Text = $"{ConvertirDate(forecast.dt)}";
+                                            Date2.Text = $"{ConvertirDate(forecast.dt,lang)}";
                                             imageUrl =
                                                 $"http://openweathermap.org/img/w/{forecast.weather[0].icon}.png";
                                             ChargerImageDepuisUrl(imageUrl, "MeteoImage2");
@@ -282,7 +282,7 @@ public partial class MainWindow : Window
                                             Humidite3.Text = $"Humidité : {forecast.main.Humidity}%";
                                             TempVille3.Text = $"{forecast.main.Temp}°C";
                                             Description3.Text = $"{forecast.weather[0].description}";
-                                            Date3.Text = $"{ConvertirDate(forecast.dt)}";
+                                            Date3.Text = $"{ConvertirDate(forecast.dt,lang)}";
                                             imageUrl =
                                                 $"http://openweathermap.org/img/w/{forecast.weather[0].icon}.png";
                                             ChargerImageDepuisUrl(imageUrl, "MeteoImage3");
@@ -293,7 +293,7 @@ public partial class MainWindow : Window
                                             Humidite4.Text = $"Humidité : {forecast.main.Humidity}%";
                                             TempVille4.Text = $"{forecast.main.Temp}°C";
                                             Description4.Text = $"{forecast.weather[0].description}";
-                                            Date4.Text = $"{ConvertirDate(forecast.dt)}";
+                                            Date4.Text = $"{ConvertirDate(forecast.dt,lang)}";
                                             imageUrl =
                                                 $"http://openweathermap.org/img/w/{forecast.weather[0].icon}.png";
                                             ChargerImageDepuisUrl(imageUrl, "MeteoImage4");
@@ -304,7 +304,7 @@ public partial class MainWindow : Window
                                             Humidite5.Text = $"Humidité : {forecast.main.Humidity}%";
                                             TempVille5.Text = $"{forecast.main.Temp}°C";
                                             Description5.Text = $"{forecast.weather[0].description}";
-                                            Date5.Text = $"{ConvertirDate(forecast.dt)}";
+                                            Date5.Text = $"{ConvertirDate(forecast.dt,lang)}";
                                             imageUrl =
                                                 $"http://openweathermap.org/img/w/{forecast.weather[0].icon}.png";
                                             ChargerImageDepuisUrl(imageUrl, "MeteoImage5");
@@ -338,6 +338,66 @@ public partial class MainWindow : Window
         ChargerMeteoPrevu(entrée);
 
     }
+    public string TrouverCulture(string cultureCode)
+    {
+        string[] cultureList = new string[]
+        {
+            "af-ZA",
+            "sq-AL",
+            "ar",
+            "az-AZ",
+            "bg-BG",
+            "ca-ES",
+            "cs-CZ",
+            "da-DK",
+            "de-DE",
+            "el-GR",
+            "en",
+            "eu-ES",
+            "fa-IR",
+            "fi-FI",
+            "fr-FR",
+            "gl-ES",
+            "he-IL",
+            "hi-IN",
+            "hr-HR",
+            "hu-HU",
+            "id-ID",
+            "it-IT",
+            "ja-JP",
+            "ko-KR",
+            "lv-LV",
+            "lt-LT",
+            "mk-MK",
+            "nb-NO",
+            "nl-NL",
+            "pl-PL",
+            "pt-PT",
+            "pt-BR",
+            "ro-RO",
+            "ru-RU",
+            "sv-SE",
+            "sk-SK",
+            "sl-SI",
+            "es-ES",
+            "sr-SP", // Adjust according to the script needed, e.g., "sr-Cyrl-SP" or "sr-Latn-SP"
+            "th-TH",
+            "tr-TR",
+            "uk-UA",
+            "vi-VN",
+            "zh-CN",
+            "zh-TW",
+            "zu-ZA"
+        };
+        foreach (var culture in cultureList)
+        {
+            if (culture.StartsWith(cultureCode, StringComparison.OrdinalIgnoreCase))
+            {
+                return culture;
+            }
+        }
+        return null; 
+    }
     
     public void ChangeLangue(object sender, SelectionChangedEventArgs e)
     {
@@ -347,8 +407,16 @@ public partial class MainWindow : Window
             if (selectedItem?.Tag is string abbreviation)
             {
                 // Utilisez l'abréviation ici
-                ChargerMeteoActuelle(SearchBox.Text,abbreviation);
-                ChargerMeteoPrevu(SearchBox.Text,abbreviation);
+                if (SearchBox.Text != null)
+                {
+                    ChargerMeteoActuelle(SearchBox.Text, abbreviation);
+                    ChargerMeteoPrevu(SearchBox.Text, abbreviation);
+                }
+                else
+                {
+                    ChargerMeteoActuelle(ExtractionVilleDefaut(), abbreviation);
+                    ChargerMeteoPrevu(ExtractionVilleDefaut(), abbreviation);
+                }
             }
         }
 
@@ -360,16 +428,16 @@ public partial class MainWindow : Window
         return dateTime.Substring(11) == "12:00:00";
     }
     
-    public string ConvertirDate(string dateString)
+    public string ConvertirDate(string dateString,string lang="fr")
     {
         // Méthode pour convertir les dates
-        CultureInfo cultureInfo = new CultureInfo("fr-FR");
-
+        CultureInfo cultureInfo = new CultureInfo(TrouverCulture(lang));
+        
         // date en string convertie en dateTime 
         DateTime dateFormaté = DateTime.ParseExact(dateString, "yyyy-MM-dd HH:mm:ss", cultureInfo);
         
         // formater en date francaise
-        return dateFormaté.ToString("dddd, d MMMM yyyy 'à' HH:mm:ss", cultureInfo);
+        return dateFormaté.ToString("dddd, d MMMM yyyy HH:mm:ss", cultureInfo);
 
     }
     public string ExtractionVilleDefaut()
