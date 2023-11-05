@@ -156,8 +156,6 @@ public partial class MainWindow : Window
             ChargerMeteoPrevu(ExtractionVilleDefaut());
         }
 
-        // Initialisation des composants de l'interface
-
     }
 
     public async void ChargerMeteoActuelle(string input, string lang="fr")
@@ -316,42 +314,6 @@ public partial class MainWindow : Window
             }
         }
     }
-    
-
-    
-    public void SauvegardeVilleDefaut(object sender, RoutedEventArgs e)
-    {
-        string jsonString;
-        Uri fileUri = new Uri("avares://WeatherApp/Assets/options.json");
-        
-        string baseDir = AppContext.BaseDirectory;
-
-        int binIndex = baseDir.IndexOf("\\bin", StringComparison.OrdinalIgnoreCase);
-        string jsonPath = baseDir.Substring(0, binIndex) + "/Assets/options.json";
-        
-        using (var stream = AssetLoader.Open(fileUri))
-        using (var lecteur = new StreamReader(stream))
-        {
-            // Lire le flux en tant que chaîne de caractères.
-            jsonString = lecteur.ReadToEnd();
-        }
-        // Modifier les propriétés
-        var paramètres = JsonConvert.DeserializeObject<SettingsRoot>(jsonString);
-        
-        paramètres.ApplicationSettings.DefaultLocation = DefaultCity.Text;
-        
-        //  Sérialiser l'objet modifié en JSON
-        var updatedJsonString = JsonConvert.SerializeObject(paramètres, Formatting.Indented);
-        
-        using (var fileStream = new FileStream(jsonPath, FileMode.Create, FileAccess.Write))
-        using (var ecrivain = new StreamWriter(fileStream))
-        {
-            // Étape 5: Écrire le JSON mis à jour dans le fichier
-               ecrivain.Write(updatedJsonString);
-        }
-        
-    }
-    
     public void RechercherMeteo(object sender, RoutedEventArgs e)
     {
         // Méthode pour déclencher la recherche météorologique
@@ -405,6 +367,39 @@ public partial class MainWindow : Window
 
            return paramètres.ApplicationSettings.DefaultLocation;
         }
+    }
+    
+    public void SauvegardeVilleDefaut(object sender, RoutedEventArgs e)
+    {
+        string jsonString;
+        Uri fileUri = new Uri("avares://WeatherApp/Assets/options.json");
+        
+        string baseDir = AppContext.BaseDirectory;
+
+        int binIndex = baseDir.IndexOf("\\bin", StringComparison.OrdinalIgnoreCase);
+        string jsonPath = baseDir.Substring(0, binIndex) + "/Assets/options.json";
+        
+        using (var stream = AssetLoader.Open(fileUri))
+        using (var lecteur = new StreamReader(stream))
+        {
+            // Lire le flux en tant que chaîne de caractères.
+            jsonString = lecteur.ReadToEnd();
+        }
+        // Modifier les propriétés
+        var paramètres = JsonConvert.DeserializeObject<SettingsRoot>(jsonString);
+        
+        paramètres.ApplicationSettings.DefaultLocation = DefaultCity.Text;
+        
+        //  Sérialiser l'objet modifié en JSON
+        var updatedJsonString = JsonConvert.SerializeObject(paramètres, Formatting.Indented);
+        
+        using (var fileStream = new FileStream(jsonPath, FileMode.Create, FileAccess.Write))
+        using (var ecrivain = new StreamWriter(fileStream))
+        {
+            // Étape 5: Écrire le JSON mis à jour dans le fichier
+            ecrivain.Write(updatedJsonString);
+        }
+        
     }
     public async void ChargerImageDepuisUrl(string imageUrl,string NomImage)
     {
