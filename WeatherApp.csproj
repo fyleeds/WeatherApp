@@ -24,6 +24,5 @@
     <ItemGroup>
       <None Remove="Assets\image-from-rawpixel-id-6117915-original.png" />
       <Resource Include="Assets\image-from-rawpixel-id-6117915-original.png" />
-      <AvaloniaResource Include="Assets/options.json" />
     </ItemGroup>
 </Project>

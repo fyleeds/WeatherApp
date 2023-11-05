@@ -12,10 +12,10 @@ build_property.InvariantGlobalization =
 build_property.PlatformNeutralAssembly = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = WeatherApp
-build_property.ProjectDir = C:\Users\Timot\WeatherApp\
+build_property.ProjectDir = C:\Users\Penot Clement\Desktop\Dev\CSharp\WeatherApp\
 
-[C:/Users/Timot/WeatherApp/App.axaml]
+[C:/Users/Penot Clement/Desktop/Dev/CSharp/WeatherApp/App.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/Timot/WeatherApp/MainWindow.axaml]
+[C:/Users/Penot Clement/Desktop/Dev/CSharp/WeatherApp/MainWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Net;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using Avalonia.Interactivity;
 using Avalonia.Media.Imaging;
@@ -148,12 +149,24 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+                
+        string baseDir = AppContext.BaseDirectory;
+        int binIndex = baseDir.IndexOf("\\bin", StringComparison.OrdinalIgnoreCase);
+        string jsonPath = baseDir.Substring(0, binIndex) + "/Assets/options.json";
         
-        //initialisation par ville par défaut
-        if (ExtractionVilleDefaut() != "")
+        bool fileExists = File.Exists(jsonPath);
+        Console.WriteLine(fileExists);
+        if (!(fileExists)){
+            CreateAndSaveOptionsJson();
+        }
+        else
         {
-            ChargerMeteoActuelle(ExtractionVilleDefaut());
-            ChargerMeteoPrevu(ExtractionVilleDefaut());
+            //initialisation par ville par défaut
+            if (ExtractionVilleDefaut() != "")
+            {
+                ChargerMeteoActuelle(ExtractionVilleDefaut());
+                ChargerMeteoPrevu(ExtractionVilleDefaut());
+            }
         }
 
     }
@@ -440,33 +453,75 @@ public partial class MainWindow : Window
         return dateFormaté.ToString("dddd, d MMMM yyyy HH:mm:ss", cultureInfo);
 
     }
+    public void CreateAndSaveOptionsJson()
+    {
+        string baseDir = AppContext.BaseDirectory;
+        int binIndex = baseDir.IndexOf("\\bin", StringComparison.OrdinalIgnoreCase);
+        string jsonPath = baseDir.Substring(0, binIndex) + "/Assets/options.json";
+        
+        var settings = new SettingsRoot
+        {
+            ApplicationSettings = new ApplicationSettings
+            {
+                DefaultLocation = ""
+            }
+        };
+
+        string json = JsonConvert.SerializeObject(settings, Formatting.Indented);
+        File.WriteAllText(jsonPath, json);
+    }
     public string ExtractionVilleDefaut()
     {
-        using (var stream = AssetLoader.Open(new Uri("avares://WeatherApp/Assets/options.json")))
-        using (var lecteur = new StreamReader(stream))
+        string jsonString;
+        //Uri fileUri = new Uri("avares://WeatherApp/Assets/options.json");
+       
+        string baseDir = AppContext.BaseDirectory;
+        int binIndex = baseDir.IndexOf("\\bin", StringComparison.OrdinalIgnoreCase);
+        string jsonPath = baseDir.Substring(0, binIndex) + "/Assets/options.json";
+        
+        bool fileExists = File.Exists(jsonPath);
+        Console.WriteLine($"her {fileExists}");
+        
+        //using (var stream = AssetLoader.Open(fileUri))
+        //using (var lecteur = new StreamReader(stream))
+        //{
+        // Lire le flux en tant que chaîne de caractères.
+        //jsonString = lecteur.ReadToEnd();
+        //}
+        using (var fileStream = new FileStream(jsonPath, FileMode.Open, FileAccess.Read))
+        using (var lecteur = new StreamReader(fileStream))
         {
-           // Lire le flux en tant que chaîne de caractères.
-           var jsonString = lecteur.ReadToEnd();
-           var paramètres = JsonConvert.DeserializeObject<SettingsRoot>(jsonString);
+            // Étape 5: Écrire le JSON mis à jour dans le fichier
+            jsonString = lecteur.ReadToEnd();
+            var paramètres = JsonConvert.DeserializeObject<SettingsRoot>(jsonString);
 
-           return paramètres.ApplicationSettings.DefaultLocation;
+            return paramètres.ApplicationSettings.DefaultLocation;
         }
+
     }
     
     public void SauvegardeVilleDefaut(object sender, RoutedEventArgs e)
     {
         string jsonString;
-        Uri fileUri = new Uri("avares://WeatherApp/Assets/options.json");
-        
+        //Uri fileUri = new Uri("avares://WeatherApp/Assets/options.json");
+       
         string baseDir = AppContext.BaseDirectory;
-
         int binIndex = baseDir.IndexOf("\\bin", StringComparison.OrdinalIgnoreCase);
         string jsonPath = baseDir.Substring(0, binIndex) + "/Assets/options.json";
         
-        using (var stream = AssetLoader.Open(fileUri))
-        using (var lecteur = new StreamReader(stream))
-        {
+        bool fileExists = File.Exists(jsonPath);
+        Console.WriteLine($"her {fileExists}");
+        
+        //using (var stream = AssetLoader.Open(fileUri))
+        //using (var lecteur = new StreamReader(stream))
+        //{
             // Lire le flux en tant que chaîne de caractères.
+            //jsonString = lecteur.ReadToEnd();
+        //}
+        using (var fileStream = new FileStream(jsonPath, FileMode.Open, FileAccess.Read))
+        using (var lecteur = new StreamReader(fileStream))
+        {
+            // Étape 5: Écrire le JSON mis à jour dans le fichier
             jsonString = lecteur.ReadToEnd();
         }
         // Modifier les propriétés
