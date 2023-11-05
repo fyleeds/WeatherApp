@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\RiderProjects\\Others\\WeatherApp\\WeatherApp.csproj": {}
+    "C:\\Users\\Timot\\WeatherApp\\WeatherApp.csproj": {}
   },
   "projects": {
-    "D:\\RiderProjects\\Others\\WeatherApp\\WeatherApp.csproj": {
+    "C:\\Users\\Timot\\WeatherApp\\WeatherApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\RiderProjects\\Others\\WeatherApp\\WeatherApp.csproj",
+        "projectUniqueName": "C:\\Users\\Timot\\WeatherApp\\WeatherApp.csproj",
         "projectName": "WeatherApp",
-        "projectPath": "D:\\RiderProjects\\Others\\WeatherApp\\WeatherApp.csproj",
-        "packagesPath": "C:\\Users\\clemc\\.nuget\\packages\\",
-        "outputPath": "D:\\RiderProjects\\Others\\WeatherApp\\obj\\",
+        "projectPath": "C:\\Users\\Timot\\WeatherApp\\WeatherApp.csproj",
+        "packagesPath": "C:\\Users\\Timot\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Timot\\WeatherApp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\clemc\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Timot\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"

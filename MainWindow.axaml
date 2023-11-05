@@ -8,7 +8,7 @@
 
     <TabControl>
          <!-- Onglet 1 : Recherche de ville -->
-        <TabItem Header="Recherche" Background="LightGray" HorizontalAlignment="Stretch">
+        <TabItem Header="Recherche" Background="LightGray" FontWeight="Bold" HorizontalAlignment="Stretch">
             <Grid Margin="50" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -38,71 +38,84 @@
         </TabItem>
 
         <!-- Deuxième onglet -->
-        <TabItem Header="Prévisions" Background="LightGray" HorizontalContentAlignment="Center">
+        <TabItem Header="Prévisions" Background="LightGray" FontWeight="Bold" HorizontalContentAlignment="Center">
             <ListBox  HorizontalAlignment="Center" Width="1200">
                 <ListBoxItem>
-                    <Expander Header="Jour1"  Width="500" >
-                        <!-- Contenu principal de l'Expander -->
-                        <StackPanel Spacing="5">
-                            <!-- Informations principales -->
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                                <Image x:Name="MeteoImage1" Width="20" Height="20"/>
-                                <TextBlock x:Name="TempVille1" Width="100" FontSize="16"/>
-                                <TextBlock x:Name="Description1" Width="150" FontSize="16" HorizontalAlignment="Stretch"/>
+                    <Expander  Width="500">
+                        <Expander.Header>
+                            <TextBlock x:Name="Date1" FontSize="14"/>
+                        </Expander.Header>
+                        <Expander.Content>
+                            <!-- Contenu principal de l'Expander -->
+                            <StackPanel Spacing="10">
+                                <TextBlock x:Name="NomVille1" FontWeight="Bold" FontSize="14"/>
+                                <!-- Informations principales -->
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                    <Image x:Name="MeteoImage1" Width="20" Height="20"/>
+                                    <TextBlock x:Name="TempVille1" Width="100" FontSize="16"/>
+                                    <TextBlock x:Name="Description1" Width="150" FontSize="16" HorizontalAlignment="Stretch"/>
+                                </StackPanel>
+                                <!-- Contenu détaillé (visible lors de l'expansion) -->
+                                <StackPanel Spacing="10">
+                                    <TextBlock x:Name="Humidite1" FontSize="14"/>
+                                    <TextBlock x:Name="Coords1" FontSize="14"/>
+                                    <!-- ... Autres détails ... -->
+                                </StackPanel>
                             </StackPanel>
-                            <!-- Contenu détaillé (visible lors de l'expansion) -->
-                            <StackPanel Spacing="5">
-                                <TextBlock x:Name="Humidite1" FontSize="14"/>
-                                <TextBlock x:Name="Date1" FontSize="14"/>
-                                <TextBlock x:Name="NomVille1" FontSize="14"/>
-                                <TextBlock x:Name="Coords1" FontSize="14"/>
-                                <!-- ... Autres détails ... -->
-                            </StackPanel>
-                        </StackPanel>
+                        </Expander.Content>                       
                     </Expander>
                 </ListBoxItem>
                 <!-- Répétez ce modèle pour les autres jours -->
                 <!-- ... -->
                 <ListBoxItem>
-                    <Expander Header="Jour2" Width="500">
-                        <!-- Contenu principal de l'Expander -->
-                        <StackPanel Spacing="10">
-                            <!-- Informations principales -->
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                                <Image x:Name="MeteoImage2" Width="20" Height="20"/>
-                                <TextBlock x:Name="TempVille2" Width="100" FontSize="16"/>
-                                <TextBlock x:Name="Description2" Width="150" FontSize="16" HorizontalAlignment="Stretch"/>
+                    <Expander  Width="500">
+                        <Expander.Header>
+                            <TextBlock x:Name="Date2" FontSize="14"/>
+                        </Expander.Header>
+                        <Expander.Content>
+                            <!-- Contenu principal de l'Expander -->
+                            <StackPanel Spacing="10">
+                                <TextBlock x:Name="NomVille2" FontWeight="Bold" FontSize="14"/>
+                                <!-- Informations principales -->
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                    <Image x:Name="MeteoImage2" Width="20" Height="20"/>
+                                    <TextBlock x:Name="TempVille2" Width="100" FontSize="16"/>
+                                    <TextBlock x:Name="Description2" Width="150" FontSize="16" HorizontalAlignment="Stretch"/>
+                                </StackPanel>
+                                <!-- Contenu détaillé (visible lors de l'expansion) -->
+                                <StackPanel Spacing="10">
+                                    <TextBlock x:Name="Humidite2" FontSize="14"/>
+                                    <TextBlock x:Name="Coords2" FontSize="14"/>
+                                    <!-- ... Autres détails ... -->
+                                </StackPanel>
                             </StackPanel>
-                            <!-- Contenu détaillé (visible lors de l'expansion) -->
-                            <StackPanel Spacing="5">
-                                <TextBlock x:Name="Humidite2" FontSize="14"/>
-                                <TextBlock  x:Name="Date2" FontSize="14"/>
-                                <TextBlock x:Name="NomVille2" FontSize="14"/>
-                                <TextBlock x:Name="Coords2" FontSize="14"/>
-                                <!-- ... Autres détails ... -->
-                            </StackPanel>
-                        </StackPanel>
+                        </Expander.Content>                      
                     </Expander>
                 </ListBoxItem>
                 <ListBoxItem>
-                    <Expander Header="Jour3" Width="500">
-                        <!-- Contenu principal de l'Expander -->
-                        <StackPanel Spacing="10">
-                            <!-- Informations principales -->
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                                <Image x:Name="MeteoImage3" Width="20" Height="20"/>
-                                <TextBlock x:Name="TempVille3" Width="100" FontSize="16"/>
-                                <TextBlock x:Name="Description3" Width="150" FontSize="16" HorizontalAlignment="Stretch"/>
+                    <Expander  Width="500">
+                        <Expander.Header>
+                            <TextBlock x:Name="Date3" FontSize="14"/>
+                        </Expander.Header>
+                        <Expander.Content>
+                            <!-- Contenu principal de l'Expander -->
+                            <StackPanel Spacing="10">
+                                <TextBlock x:Name="NomVille3" FontWeight="Bold" FontSize="14"/>
+                                <!-- Informations principales -->
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                    <Image x:Name="MeteoImage3" Width="20" Height="20"/>
+                                    <TextBlock x:Name="TempVille3" Width="100" FontSize="16"/>
+                                    <TextBlock x:Name="Description3" Width="150" FontSize="16" HorizontalAlignment="Stretch"/>
+                                </StackPanel>
+                                <!-- Contenu détaillé (visible lors de l'expansion) -->
+                                <StackPanel Spacing="10">
+                                    <TextBlock x:Name="Humidite3" FontSize="14"/>
+                                    <TextBlock x:Name="Coords3" FontSize="14"/>
+                                    <!-- ... Autres détails ... -->
+                                </StackPanel>
                             </StackPanel>
-                            <!-- Contenu détaillé (visible lors de l'expansion) -->
-                            <StackPanel Spacing="5">
-                                <TextBlock x:Name="Humidite3" FontSize="14"/>
-                                <TextBlock x:Name="Date3" FontSize="14"/>
-                                <TextBlock x:Name="NomVille3" FontSize="14"/>
-                                <TextBlock x:Name="Coords3" FontSize="14"/>                                
-                                <!-- ... Autres détails ... -->
-                            </StackPanel>
-                        </StackPanel>
+                        </Expander.Content>
+                       
                     </Expander>
                 </ListBoxItem>
                 <ListBoxItem>
@@ -113,6 +126,7 @@
                         <Expander.Content>
                             <!-- Contenu principal de l'Expander -->
                             <StackPanel Spacing="10">
+                                <TextBlock x:Name="NomVille4" FontWeight="Bold" FontSize="14"/>
                                 <!-- Informations principales -->
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                                     <Image x:Name="MeteoImage4" Width="20" Height="20"/>
@@ -120,43 +134,46 @@
                                     <TextBlock x:Name="Description4" Width="150" FontSize="16" HorizontalAlignment="Stretch"/>
                                 </StackPanel>
                                 <!-- Contenu détaillé (visible lors de l'expansion) -->
-                                <StackPanel Spacing="5">
+                                <StackPanel Spacing="10">
+                                    <!-- <TextBlock x:Name="NomVille4" FontSize="14"/> -->
                                     <TextBlock x:Name="Humidite4" FontSize="14"/>
-                                    <TextBlock x:Name="NomVille4" FontSize="14"/>
                                     <TextBlock x:Name="Coords4" FontSize="14"/>
                                     <!-- ... Autres détails ... -->
                                 </StackPanel>
                             </StackPanel>
-                        </Expander.Content>
-                       
+                        </Expander.Content>                      
                     </Expander>
                 </ListBoxItem>
                 <ListBoxItem>
-                    <Expander Header="Jour5" Width="500">
-                        <!-- Contenu principal de l'Expander -->
-                        <StackPanel Spacing="10">
-                            <!-- Informations principales -->
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                                <Image x:Name="MeteoImage5" Width="20" Height="20"/>
-                                <TextBlock x:Name="TempVille5" Width="100" FontSize="16"/>
-                                <TextBlock x:Name="Description5" Width="150" FontSize="16" HorizontalAlignment="Stretch"/>
+                    <Expander  Width="500">
+                        <Expander.Header>
+                            <TextBlock x:Name="Date5" FontSize="14"/>
+                        </Expander.Header>
+                        <Expander.Content>
+                            <!-- Contenu principal de l'Expander -->
+                            <StackPanel Spacing="10">
+                                <TextBlock x:Name="NomVille5" FontWeight="Bold" FontSize="14"/>
+                                <!-- Informations principales -->
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                    <Image x:Name="MeteoImage5" Width="20" Height="20"/>
+                                    <TextBlock x:Name="TempVille5" Width="100" FontSize="16"/>
+                                    <TextBlock x:Name="Description5" Width="150" FontSize="16" HorizontalAlignment="Stretch"/>
+                                </StackPanel>
+                                <!-- Contenu détaillé (visible lors de l'expansion) -->
+                                <StackPanel Spacing="10">
+                                    <TextBlock x:Name="Humidite5" FontSize="14"/>
+                                    <TextBlock x:Name="Coords5" FontSize="14"/>
+                                    <!-- ... Autres détails ... -->
+                                </StackPanel>
                             </StackPanel>
-                            <!-- Contenu détaillé (visible lors de l'expansion) -->
-                            <StackPanel Spacing="5">
-                                <TextBlock x:Name="Humidite5" FontSize="14"/>
-                                <TextBlock x:Name="Date5" FontSize="14"/>
-                                <TextBlock x:Name="NomVille5" FontSize="14"/>
-                                <TextBlock x:Name="Coords5" FontSize="14"/>
-                                <!-- ... Autres détails ... -->
-                            </StackPanel>
-                        </StackPanel>
+                        </Expander.Content>                      
                     </Expander>
                 </ListBoxItem>
             </ListBox>           
         </TabItem>
 
         <!-- Troisième onglet -->
-        <TabItem Header="Paramètres" Background="LightGray">
+        <TabItem Header="Paramètres" Background="LightGray" FontWeight="Bold">
             <!-- Onglet 3 : Paramètres -->
             <StackPanel Margin="50">
                 <!-- Ville par défaut -->
@@ -223,6 +240,4 @@
             </StackPanel>
         </TabItem>       
     </TabControl>
-
-
 </Window>
