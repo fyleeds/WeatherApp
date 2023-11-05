@@ -155,7 +155,6 @@ public partial class MainWindow : Window
         string jsonPath = baseDir.Substring(0, binIndex) + "/Assets/options.json";
         
         bool fileExists = File.Exists(jsonPath);
-        Console.WriteLine(fileExists);
         if (!(fileExists)){
             CreateAndSaveOptionsJson();
         }
@@ -479,8 +478,6 @@ public partial class MainWindow : Window
         int binIndex = baseDir.IndexOf("\\bin", StringComparison.OrdinalIgnoreCase);
         string jsonPath = baseDir.Substring(0, binIndex) + "/Assets/options.json";
         
-        bool fileExists = File.Exists(jsonPath);
-        Console.WriteLine($"her {fileExists}");
         
         //using (var stream = AssetLoader.Open(fileUri))
         //using (var lecteur = new StreamReader(stream))
@@ -509,8 +506,6 @@ public partial class MainWindow : Window
         int binIndex = baseDir.IndexOf("\\bin", StringComparison.OrdinalIgnoreCase);
         string jsonPath = baseDir.Substring(0, binIndex) + "/Assets/options.json";
         
-        bool fileExists = File.Exists(jsonPath);
-        Console.WriteLine($"her {fileExists}");
         
         //using (var stream = AssetLoader.Open(fileUri))
         //using (var lecteur = new StreamReader(stream))
