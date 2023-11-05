@@ -392,7 +392,7 @@ public partial class MainWindow : Window
             "sk-SK",
             "sl-SI",
             "es-ES",
-            "sr-SP", // Adjust according to the script needed, e.g., "sr-Cyrl-SP" or "sr-Latn-SP"
+            "sr-SP", 
             "th-TH",
             "tr-TR",
             "uk-UA",
@@ -480,7 +480,7 @@ public partial class MainWindow : Window
         using (var fileStream = new FileStream(jsonPath, FileMode.Open, FileAccess.Read))
         using (var lecteur = new StreamReader(fileStream))
         {
-            // Étape 5: Écrire le JSON mis à jour dans le fichier
+            // Écrire le JSON mis à jour dans le fichier
             jsonString = lecteur.ReadToEnd();
             var paramètres = JsonConvert.DeserializeObject<SettingsRoot>(jsonString);
 
@@ -515,7 +515,7 @@ public partial class MainWindow : Window
         using (var fileStream = new FileStream(jsonPath, FileMode.Create, FileAccess.Write))
         using (var ecrivain = new StreamWriter(fileStream))
         {
-            // Étape 5: Écrire le JSON mis à jour dans le fichier
+            // Écrire le JSON mis à jour dans le fichier
             ecrivain.Write(updatedJsonString);
         }
         
@@ -539,7 +539,7 @@ public partial class MainWindow : Window
         }
         catch (Exception ex)
         {
-            // Handle any potential exceptions, such as network errors or invalid URLs.
+            
             Console.WriteLine("Error loading image: " + ex.Message);
         }
     }
