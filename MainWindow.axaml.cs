@@ -166,6 +166,7 @@ public partial class MainWindow : Window
             try
             {
                 Location newLocation = new Location {};
+                ErrorMessage.Text = "";  
                 if (await ObtenirCoordonneesVilleAsync(input) != (string.Empty, 0, 0))
                 {
                     (newLocation.NomVille, newLocation.Latitude, newLocation.Longitude) =
@@ -213,104 +214,114 @@ public partial class MainWindow : Window
         {
             try
             {
-                Location newLocation = new Location {};
-                (newLocation.NomVille,newLocation.Latitude,newLocation.Longitude) = await ObtenirCoordonneesVilleAsync(input);
-
-                // Spécifiez l'URL de l'API que vous souhaitez interroger
-                string apiUrl =
-                    $"https://api.openweathermap.org/data/2.5/forecast?lat={newLocation.Latitude}&lon={newLocation.Longitude}&appid=19e8ae246f03ffc54bbdae83a37e7315&lang={lang}&units=metric&exclud=name";
-
-                // Effectuez une requête GET
-                HttpResponseMessage réponse = await client.GetAsync(apiUrl);
-
-                // Vérifiez si la requête a réussi (code de statut 200 OK)
-                if (réponse.IsSuccessStatusCode)
+                ErrorMessage.Text = "";
+                if (await ObtenirCoordonneesVilleAsync(input) != (string.Empty, 0, 0))
                 {
-                    // Lisez le contenu de la réponse
-                    string contenu = await réponse.Content.ReadAsStringAsync();
-                    var forecastData = JsonConvert.DeserializeObject<WeatherForecast>(contenu);
-                    
-                    if (forecastData?.list != null)
+                    Location newLocation = new Location { };
+                    (newLocation.NomVille, newLocation.Latitude, newLocation.Longitude) =
+                        await ObtenirCoordonneesVilleAsync(input);
+
+                    // Spécifiez l'URL de l'API que vous souhaitez interroger
+                    string apiUrl =
+                        $"https://api.openweathermap.org/data/2.5/forecast?lat={newLocation.Latitude}&lon={newLocation.Longitude}&appid=19e8ae246f03ffc54bbdae83a37e7315&lang={lang}&units=metric&exclud=name";
+
+                    // Effectuez une requête GET
+                    HttpResponseMessage réponse = await client.GetAsync(apiUrl);
+
+                    // Vérifiez si la requête a réussi (code de statut 200 OK)
+                    if (réponse.IsSuccessStatusCode)
                     {
-                        int i = 0;
-                        NomVille1.Text = $" {forecastData.city.Name}";
-                        Coords1.Text = $"lat :{forecastData.city.Coord.Lat} , lon : {forecastData.city.Coord.Lon}";
-                        NomVille2.Text = $" {forecastData.city.Name}";
-                        Coords2.Text = $"lat :{forecastData.city.Coord.Lat} , lon : {forecastData.city.Coord.Lon}";
-                        NomVille3.Text = $" {forecastData.city.Name}";
-                        Coords3.Text = $"lat :{forecastData.city.Coord.Lat} , lon : {forecastData.city.Coord.Lon}";
-                        NomVille4.Text = $" {forecastData.city.Name}";
-                        Coords4.Text = $"lat :{forecastData.city.Coord.Lat} , lon : {forecastData.city.Coord.Lon}";
-                        NomVille5.Text = $" {forecastData.city.Name}";
-                        Coords5.Text = $"lat :{forecastData.city.Coord.Lat} , lon : {forecastData.city.Coord.Lon}";
-                        foreach (var forecast in forecastData.list)
+                        // Lisez le contenu de la réponse
+                        string contenu = await réponse.Content.ReadAsStringAsync();
+                        var forecastData = JsonConvert.DeserializeObject<WeatherForecast>(contenu);
+
+                        if (forecastData?.list != null)
                         {
-                            
-                            if (ComparerDateMidi(forecast.dt))
+                            int i = 0;
+                            NomVille1.Text = $" {forecastData.city.Name}";
+                            Coords1.Text = $"lat :{forecastData.city.Coord.Lat} , lon : {forecastData.city.Coord.Lon}";
+                            NomVille2.Text = $" {forecastData.city.Name}";
+                            Coords2.Text = $"lat :{forecastData.city.Coord.Lat} , lon : {forecastData.city.Coord.Lon}";
+                            NomVille3.Text = $" {forecastData.city.Name}";
+                            Coords3.Text = $"lat :{forecastData.city.Coord.Lat} , lon : {forecastData.city.Coord.Lon}";
+                            NomVille4.Text = $" {forecastData.city.Name}";
+                            Coords4.Text = $"lat :{forecastData.city.Coord.Lat} , lon : {forecastData.city.Coord.Lon}";
+                            NomVille5.Text = $" {forecastData.city.Name}";
+                            Coords5.Text = $"lat :{forecastData.city.Coord.Lat} , lon : {forecastData.city.Coord.Lon}";
+                            foreach (var forecast in forecastData.list)
                             {
-                                i++;
-                                switch (i)
+
+                                if (ComparerDateMidi(forecast.dt))
                                 {
-                                    case 1:
-                                        Humidite1.Text = $"Humidité : {forecast.main.Humidity}%";
-                                        TempVille1.Text = $"{forecast.main.Temp}°C";
-                                        Description1.Text = $"{forecast.weather[0].description}";
-                                        Date1.Text = $"{ConvertirDate(forecast.dt)}";
-                                        imageUrl = $"http://openweathermap.org/img/w/{forecast.weather[0].icon}.png";
-                                        ChargerImageDepuisUrl(imageUrl,"MeteoImage1");
+                                    i++;
+                                    switch (i)
+                                    {
+                                        case 1:
+                                            Humidite1.Text = $"Humidité : {forecast.main.Humidity}%";
+                                            TempVille1.Text = $"{forecast.main.Temp}°C";
+                                            Description1.Text = $"{forecast.weather[0].description}";
+                                            Date1.Text = $"{ConvertirDate(forecast.dt)}";
+                                            imageUrl =
+                                                $"http://openweathermap.org/img/w/{forecast.weather[0].icon}.png";
+                                            ChargerImageDepuisUrl(imageUrl, "MeteoImage1");
 
-                                        
-                                        break;
-                                    case 2:
-                                        Humidite2.Text = $"Humidité : {forecast.main.Humidity}%";
-                                        TempVille2.Text = $"{forecast.main.Temp}°C";
-                                        Description2.Text = $"{forecast.weather[0].description}";
-                                        Date2.Text = $"{ConvertirDate(forecast.dt)}";
-                                        imageUrl = $"http://openweathermap.org/img/w/{forecast.weather[0].icon}.png";
-                                        ChargerImageDepuisUrl(imageUrl,"MeteoImage2");
 
-                                        
-                                        break;
-                                    case 3:
-                                        Humidite3.Text = $"Humidité : {forecast.main.Humidity}%";
-                                        TempVille3.Text = $"{forecast.main.Temp}°C";
-                                        Description3.Text = $"{forecast.weather[0].description}";
-                                        Date3.Text = $"{ConvertirDate(forecast.dt)}";
-                                        imageUrl = $"http://openweathermap.org/img/w/{forecast.weather[0].icon}.png";
-                                        ChargerImageDepuisUrl(imageUrl,"MeteoImage3");
+                                            break;
+                                        case 2:
+                                            Humidite2.Text = $"Humidité : {forecast.main.Humidity}%";
+                                            TempVille2.Text = $"{forecast.main.Temp}°C";
+                                            Description2.Text = $"{forecast.weather[0].description}";
+                                            Date2.Text = $"{ConvertirDate(forecast.dt)}";
+                                            imageUrl =
+                                                $"http://openweathermap.org/img/w/{forecast.weather[0].icon}.png";
+                                            ChargerImageDepuisUrl(imageUrl, "MeteoImage2");
 
-                                        
-                                        break;
-                                    case 4:
-                                        Humidite4.Text = $"Humidité : {forecast.main.Humidity}%";
-                                        TempVille4.Text = $"{forecast.main.Temp}°C";
-                                        Description4.Text = $"{forecast.weather[0].description}";
-                                        Date4.Text = $"{ConvertirDate(forecast.dt)}";
-                                        imageUrl = $"http://openweathermap.org/img/w/{forecast.weather[0].icon}.png";
-                                        ChargerImageDepuisUrl(imageUrl,"MeteoImage4");
 
-                                        
-                                        break;
-                                    case 5:
-                                        Humidite5.Text = $"Humidité : {forecast.main.Humidity}%";
-                                        TempVille5.Text = $"{forecast.main.Temp}°C";
-                                        Description5.Text = $"{forecast.weather[0].description}";
-                                        Date5.Text = $"{ConvertirDate(forecast.dt)}";
-                                        imageUrl = $"http://openweathermap.org/img/w/{forecast.weather[0].icon}.png";
-                                        ChargerImageDepuisUrl(imageUrl,"MeteoImage5");
+                                            break;
+                                        case 3:
+                                            Humidite3.Text = $"Humidité : {forecast.main.Humidity}%";
+                                            TempVille3.Text = $"{forecast.main.Temp}°C";
+                                            Description3.Text = $"{forecast.weather[0].description}";
+                                            Date3.Text = $"{ConvertirDate(forecast.dt)}";
+                                            imageUrl =
+                                                $"http://openweathermap.org/img/w/{forecast.weather[0].icon}.png";
+                                            ChargerImageDepuisUrl(imageUrl, "MeteoImage3");
 
-                                        
-                                        break;
+
+                                            break;
+                                        case 4:
+                                            Humidite4.Text = $"Humidité : {forecast.main.Humidity}%";
+                                            TempVille4.Text = $"{forecast.main.Temp}°C";
+                                            Description4.Text = $"{forecast.weather[0].description}";
+                                            Date4.Text = $"{ConvertirDate(forecast.dt)}";
+                                            imageUrl =
+                                                $"http://openweathermap.org/img/w/{forecast.weather[0].icon}.png";
+                                            ChargerImageDepuisUrl(imageUrl, "MeteoImage4");
+
+
+                                            break;
+                                        case 5:
+                                            Humidite5.Text = $"Humidité : {forecast.main.Humidity}%";
+                                            TempVille5.Text = $"{forecast.main.Temp}°C";
+                                            Description5.Text = $"{forecast.weather[0].description}";
+                                            Date5.Text = $"{ConvertirDate(forecast.dt)}";
+                                            imageUrl =
+                                                $"http://openweathermap.org/img/w/{forecast.weather[0].icon}.png";
+                                            ChargerImageDepuisUrl(imageUrl, "MeteoImage5");
+
+
+                                            break;
+                                    }
+
                                 }
-                                
+
                             }
-                            
                         }
                     }
-                }
-                else
-                {
-                    Console.WriteLine($"La requête a échoué avec le code de statut : {réponse.StatusCode}");
+                    else
+                    {
+                        Console.WriteLine($"La requête a échoué avec le code de statut : {réponse.StatusCode}");
+                    }
                 }
             }
             catch (Exception ex)
