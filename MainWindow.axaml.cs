@@ -169,7 +169,57 @@ public partial class MainWindow : Window
         }
 
     }
+    public async Task<(string NomVille, double Lat, double Lon)> ObtenirCoordonneesVilleAsync(string input)
+    {
+        // Méthode asynchrone pour obtenir les coordonnées d'une ville
+        string apiUrl =
+            $"http://api.openweathermap.org/geo/1.0/direct?q={input}&limit=1&appid=19e8ae246f03ffc54bbdae83a37e7315";
 
+        using (HttpClient client = new HttpClient())
+        {
+            try
+            {
+                // Envoyez une requête GET à l'URL spécifiée
+                HttpResponseMessage response = await client.GetAsync(apiUrl);
+                if (response.IsSuccessStatusCode)
+                {
+                    // Lisez le contenu de la réponse sous forme de chaîne
+                    string contenuJson = await response.Content.ReadAsStringAsync();
+
+                    // Lister le nom de toutes les villes
+                    var Villes = JsonConvert.DeserializeObject<List<Location>>(contenuJson);
+                
+                    // Vérifiez si des villes ont été trouvées
+                    if (Villes == null)
+                    {
+                        return (string.Empty, 0, 0);
+                    } 
+                    var Ville = Villes[0];
+                    return (Ville.NomVille, Ville.Latitude, Ville.Longitude);
+                
+                }
+                else
+                {
+                    Console.WriteLine($"Erreur HTTP : {response.StatusCode}");
+                    MessageErreur.Text = $"1 :{response.StatusCode} ";
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erreur : {ex.Message}");
+                if (ex.Message.Contains("Hôte"))
+                {
+                    MessageErreur.Text = "Pas de connexion internet";  
+                }else if(ex.Message.Contains("Index"))
+                {
+                    MessageErreur.Text = "Ville non trouvée...";
+                }
+                
+            }
+        }
+
+        return (string.Empty, 0, 0);
+    }
     public async void ChargerMeteoActuelle(string input, string lang="fr")
     {
         // Code asynchrone pour tester la récupération des données météorologiques
@@ -544,57 +594,7 @@ public partial class MainWindow : Window
         }
     }
 
-    public async Task<(string NomVille, double Lat, double Lon)> ObtenirCoordonneesVilleAsync(string input)
-    {
-        // Méthode asynchrone pour obtenir les coordonnées d'une ville
-        string apiUrl =
-            $"http://api.openweathermap.org/geo/1.0/direct?q={input}&limit=1&appid=19e8ae246f03ffc54bbdae83a37e7315";
-
-        using (HttpClient client = new HttpClient())
-        {
-            try
-            {
-                // Envoyez une requête GET à l'URL spécifiée
-                HttpResponseMessage response = await client.GetAsync(apiUrl);
-                if (response.IsSuccessStatusCode)
-                {
-                    // Lisez le contenu de la réponse sous forme de chaîne
-                    string contenuJson = await response.Content.ReadAsStringAsync();
-
-                    // Lister le nom de toutes les villes
-                    var Villes = JsonConvert.DeserializeObject<List<Location>>(contenuJson);
-                
-                    // Vérifiez si des villes ont été trouvées
-                    if (Villes == null)
-                    {
-                        return (string.Empty, 0, 0);
-                    } 
-                    var Ville = Villes[0];
-                    return (Ville.NomVille, Ville.Latitude, Ville.Longitude);
-                
-                }
-                else
-                {
-                    Console.WriteLine($"Erreur HTTP : {response.StatusCode}");
-                    MessageErreur.Text = $"1 :{response.StatusCode} ";
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Erreur : {ex.Message}");
-                if (ex.Message.Contains("Hôte"))
-                {
-                    MessageErreur.Text = "Pas de connexion internet";  
-                }else if(ex.Message.Contains("Index"))
-                {
-                    MessageErreur.Text = "Ville non trouvée...";
-                }
-                
-            }
-        }
-
-        return (string.Empty, 0, 0);
-    }
+    
 
 }
 
