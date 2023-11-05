@@ -166,32 +166,37 @@ public partial class MainWindow : Window
             try
             {
                 Location newLocation = new Location {};
-                (newLocation.NomVille,newLocation.Latitude,newLocation.Longitude) = await ObtenirCoordonneesVilleAsync(input);
-
-                // Spécifiez l'URL de l'API que vous souhaitez interroger
-                string apiUrl =
-                    $"https://api.openweathermap.org/data/2.5/weather?lat={newLocation.Latitude}&lon={newLocation.Longitude}&appid=19e8ae246f03ffc54bbdae83a37e7315&lang={lang}&units=metric&exclud=name";
-
-                // Effectuez une requête GET
-                HttpResponseMessage réponse = await client.GetAsync(apiUrl);
-
-                // Vérifiez si la requête a réussi (code de statut 200 OK)
-                if (réponse.IsSuccessStatusCode)
+                if (await ObtenirCoordonneesVilleAsync(input) != (string.Empty, 0, 0))
                 {
-                    // Lisez le contenu de la réponse
-                    string contenu = await réponse.Content.ReadAsStringAsync();
-                    var weatherData = JsonConvert.DeserializeObject<weatherData>(contenu);
-                    NomVille.Text = $"{weatherData.name}";
-                    TempVille.Text = $"{weatherData.main.Temp}°C";
-                    Humidite.Text = $"Humidité : {weatherData.main.Humidity}%";
-                    Description.Text = $"{weatherData.weather[0].Description}";
-                    LatLong.Text = $"lat :{weatherData.coord.lat}, lon :{weatherData.coord.lon}";
-                    imageUrl = $"http://openweathermap.org/img/w/{weatherData.weather[0].Icon}.png";
-                    ChargerImageDepuisUrl(imageUrl,"MeteoImage");
-                }
-                else
-                {
-                    Console.WriteLine($"La requête a échoué avec le code de statut : {réponse.StatusCode}");
+                    (newLocation.NomVille, newLocation.Latitude, newLocation.Longitude) =
+                        await ObtenirCoordonneesVilleAsync(input);
+
+
+                    // Spécifiez l'URL de l'API que vous souhaitez interroger
+                    string apiUrl =
+                        $"https://api.openweathermap.org/data/2.5/weather?lat={newLocation.Latitude}&lon={newLocation.Longitude}&appid=19e8ae246f03ffc54bbdae83a37e7315&lang={lang}&units=metric&exclud=name";
+
+                    // Effectuez une requête GET
+                    HttpResponseMessage réponse = await client.GetAsync(apiUrl);
+
+                    // Vérifiez si la requête a réussi (code de statut 200 OK)
+                    if (réponse.IsSuccessStatusCode)
+                    {
+                        // Lisez le contenu de la réponse
+                        string contenu = await réponse.Content.ReadAsStringAsync();
+                        var weatherData = JsonConvert.DeserializeObject<weatherData>(contenu);
+                        NomVille.Text = $"{weatherData.name}";
+                        TempVille.Text = $"{weatherData.main.Temp}°C";
+                        Humidite.Text = $"Humidité : {weatherData.main.Humidity}%";
+                        Description.Text = $"{weatherData.weather[0].Description}";
+                        LatLong.Text = $"lat :{weatherData.coord.lat}, lon :{weatherData.coord.lon}";
+                        imageUrl = $"http://openweathermap.org/img/w/{weatherData.weather[0].Icon}.png";
+                        ChargerImageDepuisUrl(imageUrl, "MeteoImage");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"La requête a échoué avec le code de statut : {réponse.StatusCode}");
+                    }
                 }
             }
             catch (Exception ex)
@@ -457,18 +462,25 @@ public partial class MainWindow : Window
                 else
                 {
                     Console.WriteLine($"Erreur HTTP : {response.StatusCode}");
+                    ErrorMessage.Text = $"1 :{response.StatusCode} ";
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Erreur : {ex.Message}");
+                if (ex.Message.Contains("Hôte"))
+                {
+                    ErrorMessage.Text = "Pas de connexion internet";  
+                }else if(ex.Message.Contains("Index"))
+                {
+                    ErrorMessage.Text = "Ville non trouvée...";
+                }
+                
             }
         }
 
         return (string.Empty, 0, 0);
     }
-
-    
 
 }
 

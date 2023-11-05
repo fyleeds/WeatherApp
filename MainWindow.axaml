@@ -24,6 +24,7 @@
 
                 <!-- Résultats de la recherche -->
                 <StackPanel Grid.Row="1">
+                    <TextBlock x:Name="ErrorMessage" FontWeight="Bold" FontSize="20" />
                     <TextBlock x:Name="NomVille" FontWeight="Bold" FontSize="20" />
                     <TextBlock x:Name="LatLong" Margin="0,5"/>
                     <TextBlock x:Name="TempVille" Margin="0,5"/>
