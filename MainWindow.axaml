@@ -106,24 +106,29 @@
                     </Expander>
                 </ListBoxItem>
                 <ListBoxItem>
-                    <Expander Header="Jour4" Width="500">
-                        <!-- Contenu principal de l'Expander -->
-                        <StackPanel Spacing="10">
-                            <!-- Informations principales -->
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                                <Image x:Name="MeteoImage4" Width="20" Height="20"/>
-                                <TextBlock x:Name="TempVille4" Width="100" FontSize="16"/>
-                                <TextBlock x:Name="Description4" Width="150" FontSize="16" HorizontalAlignment="Stretch"/>
+                    <Expander  Width="500">
+                        <Expander.Header>
+                            <TextBlock x:Name="Date4" FontSize="14"/>
+                        </Expander.Header>
+                        <Expander.Content>
+                            <!-- Contenu principal de l'Expander -->
+                            <StackPanel Spacing="10">
+                                <!-- Informations principales -->
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                    <Image x:Name="MeteoImage4" Width="20" Height="20"/>
+                                    <TextBlock x:Name="TempVille4" Width="100" FontSize="16"/>
+                                    <TextBlock x:Name="Description4" Width="150" FontSize="16" HorizontalAlignment="Stretch"/>
+                                </StackPanel>
+                                <!-- Contenu détaillé (visible lors de l'expansion) -->
+                                <StackPanel Spacing="5">
+                                    <TextBlock x:Name="Humidite4" FontSize="14"/>
+                                    <TextBlock x:Name="NomVille4" FontSize="14"/>
+                                    <TextBlock x:Name="Coords4" FontSize="14"/>
+                                    <!-- ... Autres détails ... -->
+                                </StackPanel>
                             </StackPanel>
-                            <!-- Contenu détaillé (visible lors de l'expansion) -->
-                            <StackPanel Spacing="5">
-                                <TextBlock x:Name="Humidite4" FontSize="14"/>
-                                <TextBlock x:Name="Date4" FontSize="14"/>
-                                <TextBlock x:Name="NomVille4" FontSize="14"/>
-                                <TextBlock x:Name="Coords4" FontSize="14"/>
-                                <!-- ... Autres détails ... -->
-                            </StackPanel>
-                        </StackPanel>
+                        </Expander.Content>
+                       
                     </Expander>
                 </ListBoxItem>
                 <ListBoxItem>
