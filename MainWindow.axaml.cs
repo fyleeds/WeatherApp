@@ -150,12 +150,12 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
                 
-        string baseDir = AppContext.BaseDirectory;
-        int binIndex = baseDir.IndexOf("\\bin", StringComparison.OrdinalIgnoreCase);
-        string jsonPath = baseDir.Substring(0, binIndex) + "/Assets/options.json";
+        string dossierPrincipal = AppContext.BaseDirectory;
+        int binIndex = dossierPrincipal.IndexOf("\\bin", StringComparison.OrdinalIgnoreCase);
+        string cheminJson = dossierPrincipal.Substring(0, binIndex) + "/Assets/options.json";
         
-        bool fileExists = File.Exists(jsonPath);
-        if (!(fileExists)){
+        bool fichierExiste = File.Exists(cheminJson);
+        if (!(fichierExiste)){
             CreateAndSaveOptionsJson();
         }
         else
@@ -178,7 +178,7 @@ public partial class MainWindow : Window
             try
             {
                 Location newLocation = new Location {};
-                ErrorMessage.Text = "";  
+                MessageErreur.Text = "";  
                 if (await ObtenirCoordonneesVilleAsync(input) != (string.Empty, 0, 0))
                 {
                     (newLocation.NomVille, newLocation.Latitude, newLocation.Longitude) =
@@ -226,7 +226,7 @@ public partial class MainWindow : Window
         {
             try
             {
-                ErrorMessage.Text = "";
+                MessageErreur.Text = "";
                 if (await ObtenirCoordonneesVilleAsync(input) != (string.Empty, 0, 0))
                 {
                     Location newLocation = new Location { };
@@ -345,7 +345,7 @@ public partial class MainWindow : Window
     public void RechercherMeteo(object sender, RoutedEventArgs e)
     {
         // Méthode pour déclencher la recherche météorologique
-        string entrée = SearchBox.Text;
+        string entrée = BarreDeRecherche.Text;
         ChargerMeteoActuelle(entrée);
         ChargerMeteoPrevu(entrée);
 
@@ -415,14 +415,14 @@ public partial class MainWindow : Window
     {
         if (sender is ComboBox comboBox)
         { 
-            ComboBoxItem selectedItem = comboBox.SelectedItem as ComboBoxItem;
-            if (selectedItem?.Tag is string abbreviation)
+            ComboBoxItem objetSelectionné = comboBox.SelectedItem as ComboBoxItem;
+            if (objetSelectionné?.Tag is string abbreviation)
             {
                 // Utilisez l'abréviation ici
-                if (SearchBox.Text != null)
+                if (BarreDeRecherche.Text != null)
                 {
-                    ChargerMeteoActuelle(SearchBox.Text, abbreviation);
-                    ChargerMeteoPrevu(SearchBox.Text, abbreviation);
+                    ChargerMeteoActuelle(BarreDeRecherche.Text, abbreviation);
+                    ChargerMeteoPrevu(BarreDeRecherche.Text, abbreviation);
                 }
                 else
                 {
@@ -434,10 +434,10 @@ public partial class MainWindow : Window
 
     }
 
-    public bool ComparerDateMidi(string dateTime)
+    public bool ComparerDateMidi(string dateHeure)
     {
         // Méthode pour comparer les dates
-        return dateTime.Substring(11) == "12:00:00";
+        return dateHeure.Substring(11) == "12:00:00";
     }
     
     public string ConvertirDate(string dateString,string lang="fr")
@@ -454,9 +454,9 @@ public partial class MainWindow : Window
     }
     public void CreateAndSaveOptionsJson()
     {
-        string baseDir = AppContext.BaseDirectory;
-        int binIndex = baseDir.IndexOf("\\bin", StringComparison.OrdinalIgnoreCase);
-        string jsonPath = baseDir.Substring(0, binIndex) + "/Assets/options.json";
+        string dossierPrincipal = AppContext.BaseDirectory;
+        int binIndex = dossierPrincipal.IndexOf("\\bin", StringComparison.OrdinalIgnoreCase);
+        string cheminJson = dossierPrincipal.Substring(0, binIndex) + "/Assets/options.json";
         
         var settings = new SettingsRoot
         {
@@ -467,17 +467,17 @@ public partial class MainWindow : Window
         };
 
         string json = JsonConvert.SerializeObject(settings, Formatting.Indented);
-        File.WriteAllText(jsonPath, json);
+        File.WriteAllText(cheminJson, json);
     }
     public string ExtractionVilleDefaut()
     {
         string jsonString;
        
-        string baseDir = AppContext.BaseDirectory;
-        int binIndex = baseDir.IndexOf("\\bin", StringComparison.OrdinalIgnoreCase);
-        string jsonPath = baseDir.Substring(0, binIndex) + "/Assets/options.json";
+        string dossierPrincipal = AppContext.BaseDirectory;
+        int binIndex = dossierPrincipal.IndexOf("\\bin", StringComparison.OrdinalIgnoreCase);
+        string cheminJson = dossierPrincipal.Substring(0, binIndex) + "/Assets/options.json";
 
-        using (var fileStream = new FileStream(jsonPath, FileMode.Open, FileAccess.Read))
+        using (var fileStream = new FileStream(cheminJson, FileMode.Open, FileAccess.Read))
         using (var lecteur = new StreamReader(fileStream))
         {
             // Écrire le JSON mis à jour dans le fichier
@@ -493,12 +493,12 @@ public partial class MainWindow : Window
     {
         string jsonString;
        
-        string baseDir = AppContext.BaseDirectory;
-        int binIndex = baseDir.IndexOf("\\bin", StringComparison.OrdinalIgnoreCase);
-        string jsonPath = baseDir.Substring(0, binIndex) + "/Assets/options.json";
+        string dossierPrincipal = AppContext.BaseDirectory;
+        int binIndex = dossierPrincipal.IndexOf("\\bin", StringComparison.OrdinalIgnoreCase);
+        string cheminJson = dossierPrincipal.Substring(0, binIndex) + "/Assets/options.json";
         
 
-        using (var fileStream = new FileStream(jsonPath, FileMode.Open, FileAccess.Read))
+        using (var fileStream = new FileStream(cheminJson, FileMode.Open, FileAccess.Read))
         using (var lecteur = new StreamReader(fileStream))
         {
             // Écrire le JSON mis à jour dans le fichier
@@ -512,7 +512,7 @@ public partial class MainWindow : Window
         //  Sérialiser l'objet modifié en JSON
         var updatedJsonString = JsonConvert.SerializeObject(paramètres, Formatting.Indented);
         
-        using (var fileStream = new FileStream(jsonPath, FileMode.Create, FileAccess.Write))
+        using (var fileStream = new FileStream(cheminJson, FileMode.Create, FileAccess.Write))
         using (var ecrivain = new StreamWriter(fileStream))
         {
             // Écrire le JSON mis à jour dans le fichier
@@ -540,7 +540,7 @@ public partial class MainWindow : Window
         catch (Exception ex)
         {
             
-            Console.WriteLine("Error loading image: " + ex.Message);
+            Console.WriteLine("erreur image chargé: " + ex.Message);
         }
     }
 
@@ -559,10 +559,10 @@ public partial class MainWindow : Window
                 if (response.IsSuccessStatusCode)
                 {
                     // Lisez le contenu de la réponse sous forme de chaîne
-                    string jsonContent = await response.Content.ReadAsStringAsync();
+                    string contenuJson = await response.Content.ReadAsStringAsync();
 
                     // Lister le nom de toutes les villes
-                    var Villes = JsonConvert.DeserializeObject<List<Location>>(jsonContent);
+                    var Villes = JsonConvert.DeserializeObject<List<Location>>(contenuJson);
                 
                     // Vérifiez si des villes ont été trouvées
                     if (Villes == null)
@@ -576,7 +576,7 @@ public partial class MainWindow : Window
                 else
                 {
                     Console.WriteLine($"Erreur HTTP : {response.StatusCode}");
-                    ErrorMessage.Text = $"1 :{response.StatusCode} ";
+                    MessageErreur.Text = $"1 :{response.StatusCode} ";
                 }
             }
             catch (Exception ex)
@@ -584,10 +584,10 @@ public partial class MainWindow : Window
                 Console.WriteLine($"Erreur : {ex.Message}");
                 if (ex.Message.Contains("Hôte"))
                 {
-                    ErrorMessage.Text = "Pas de connexion internet";  
+                    MessageErreur.Text = "Pas de connexion internet";  
                 }else if(ex.Message.Contains("Index"))
                 {
-                    ErrorMessage.Text = "Ville non trouvée...";
+                    MessageErreur.Text = "Ville non trouvée...";
                 }
                 
             }

@@ -18,13 +18,13 @@
 
                 <!-- Section de recherche de ville -->
                 <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,10">
-                    <TextBox x:Name="SearchBox" Width="200"/>
+                    <TextBox x:Name="BarreDeRecherche" Width="200"/>
                     <Button Content="Rechercher" Click="RechercherMeteo" Width="100" Margin="10,0,0,0"/>
                 </StackPanel>
 
                 <!-- Résultats de la recherche -->
                 <StackPanel Grid.Row="1">
-                    <TextBlock x:Name="ErrorMessage" FontWeight="Bold" FontSize="20" />
+                    <TextBlock x:Name="MessageErreur" FontWeight="Bold" FontSize="20" />
                     <TextBlock x:Name="NomVille" FontWeight="Bold" FontSize="20" />
                     <TextBlock x:Name="LatLong" Margin="0,5"/>
                     <TextBlock x:Name="TempVille" Margin="0,5"/>
