@@ -348,7 +348,7 @@ public partial class MainWindow : Window
         {
             // Étape 5: Écrire le JSON mis à jour dans le fichier
                ecrivain.Write(updatedJsonString);
-            }
+        }
         
     }
     
